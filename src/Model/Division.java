@@ -18,9 +18,12 @@ public class Division {
 
     private int countryID;
 
-    public Division(String divisionName, String createdBy, String lastUpdatedBy, int countryID) {
+    public Division(String divisionName, LocalDateTime createDate, String createdBy,
+                    LocalDateTime lastUpdateTime, String lastUpdatedBy, int countryID) {
         this.divisionName = divisionName;
+        this.createDate = createDate;
         this.createdBy = createdBy;
+        this.lastUpdateTime = lastUpdateTime;
         this.lastUpdatedBy = lastUpdatedBy;
         this.countryID = countryID;
     }
