@@ -16,6 +16,9 @@ public class Country {
 
     private String lastUpdatedBy;
 
+    public Country() {
+    }
+
     public Country(String countryName, String createdBy, String lastUpdatedBy) {
         this.countryName = countryName;
         this.createdBy = createdBy;

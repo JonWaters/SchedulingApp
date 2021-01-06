@@ -28,9 +28,15 @@ public class Main extends Application {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
         conn = DbConnection.startConnection();
-        Country usa = new Country("USA", "Jon", "Jon");
-        CountryDAO.create(usa);
+        Country usa = new Country();
+        usa = CountryDAO.selectByID(4);
+
         System.out.println(usa.getCountryID());
+        System.out.println(usa.getCountryName());
+        System.out.println(usa.getCreateDate());
+        System.out.println(usa.getCreatedBy());
+        System.out.println(usa.getLastUpdateTime());
+        System.out.println(usa.getLastUpdatedBy());
 
 
         launch(args);

@@ -34,5 +34,38 @@ public class CountryDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public static Country selectByID(int dbID) throws SQLException {
+
+        Country country = new Country();
+
+        try{
+            String sqlStatement = "SELECT * FROM countries WHERE Country_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, dbID);
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            rs.next();
+
+            country.setCountryID(rs.getInt("Country_ID"));
+            country.setCountryName(rs.getString("Country"));
+            country.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+            country.setCreatedBy(rs.getString("Created_By"));
+            country.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+            country.setLastUpdatedBy(rs.getString("Last_Updated_By"));
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+        return country;
+    }
 }
 
