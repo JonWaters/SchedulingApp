@@ -10,10 +10,10 @@ public class CountryDAO {
 
     private final static Connection conn = Main.conn;
 
-    public static void insert(Country country) throws SQLException {
+    public static void create(Country country) throws SQLException {
 
         try {
-            String sqlStatement = "INSERT INTO Countries(Country, Create_Date, Created_By, Last_Update, " +
+            String sqlStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Update, " +
                     "Last_Updated_by) VALUES(?, NOW(), ?, NOW(), ?)";
 
             DbQuery.setPreparedStatement(conn, sqlStatement);
@@ -31,7 +31,7 @@ public class CountryDAO {
             country.setCountryID(rs.getInt(1));
         }
         catch(SQLException e){
-            e.getMessage()
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -1,5 +1,7 @@
 package sample;
 
+import DAO.CountryDAO;
+import Model.Country;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +10,7 @@ import javafx.stage.Stage;
 import utils.DbConnection;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Main extends Application {
 
@@ -22,9 +25,14 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
         conn = DbConnection.startConnection();
+        Country usa = new Country("USA", "Jon", "Jon");
+        CountryDAO.create(usa);
+        System.out.println(usa.getCountryID());
+
+
         launch(args);
     }
 }
