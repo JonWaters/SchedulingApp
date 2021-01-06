@@ -16,11 +16,9 @@ public class Country {
 
     private String lastUpdatedBy;
 
-    public Country(String countryName, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdateTime, String lastUpdatedBy) {
+    public Country(String countryName, String createdBy, String lastUpdatedBy) {
         this.countryName = countryName;
-        this.createDate = createDate;
         this.createdBy = createdBy;
-        this.lastUpdateTime = lastUpdateTime;
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
