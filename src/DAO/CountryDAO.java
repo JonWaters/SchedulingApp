@@ -1,6 +1,8 @@
 package DAO;
 
 import Model.Country;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.Main;
 import utils.DbQuery;
 
@@ -66,6 +68,82 @@ public class CountryDAO {
         }
 
         return country;
+    }
+
+    public static ObservableList<Country> selectAll() throws SQLException {
+
+        ObservableList<Country> countries = FXCollections.observableArrayList();
+
+        try{
+            String sqlStatement = "SELECT * FROM countries";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            while(rs.next()) {
+
+                Country country = new Country();
+
+                country.setCountryID(rs.getInt("Country_ID"));
+                country.setCountryName(rs.getString("Country"));
+                country.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+                country.setCreatedBy(rs.getString("Created_By"));
+                country.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+                country.setLastUpdatedBy(rs.getString("Last_Updated_By"));
+
+                countries.add(country);
+            }
+
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+        return countries;
+    }
+
+    public static void update(Country country) throws SQLException {
+
+        try{
+            String sqlStatement = "UPDATE countries SET Country = ?, Last_Update = NOW(), " +
+                    "Last_Updated_By = ? WHERE Country_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setString(1, country.getCountryName());
+            ps.setString(2, country.getLastUpdatedBy());
+            ps.setInt(3, country.getCountryID());
+
+            ps.execute();
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void delete(Country country) throws SQLException {
+
+        try{
+            String sqlStatement = "DELETE FROM countries WHERE Country_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, country.getCountryID());
+
+            ps.execute();
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
 

@@ -28,7 +28,14 @@ public class Main extends Application {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
         conn = DbConnection.startConnection();
+        /*
         Country usa = new Country();
+        usa = CountryDAO.selectByID(4);
+
+        usa.setLastUpdatedBy("Steve");
+
+        CountryDAO.delete(usa);
+
         usa = CountryDAO.selectByID(4);
 
         System.out.println(usa.getCountryID());
@@ -37,7 +44,7 @@ public class Main extends Application {
         System.out.println(usa.getCreatedBy());
         System.out.println(usa.getLastUpdateTime());
         System.out.println(usa.getLastUpdatedBy());
-
+        */
 
         launch(args);
     }
