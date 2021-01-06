@@ -7,6 +7,7 @@ import utils.DbQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class CountryDAO {
 
@@ -19,7 +20,10 @@ public class CountryDAO {
 
         DbQuery.setPreparedStatement(conn, sqlStatement);
 
-        PreparedStatement ps = DbQuery.getPreparedStatement()
+        PreparedStatement ps = DbQuery.getPreparedStatement();
+
+        ps.setString(1, country.getCountryName());
+        ps.setTimestamp(2, Timestamp.valueOf(country.getCreateDate()));
 
         return country;
     }
