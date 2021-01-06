@@ -7,7 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utils.DbConnection;
 
+import java.sql.Connection;
+
 public class Main extends Application {
+
+    public static Connection conn = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -19,7 +23,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws ClassNotFoundException {
-        DbConnection.startConnection();
+
+        conn = DbConnection.startConnection();
         launch(args);
     }
 }
