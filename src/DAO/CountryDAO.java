@@ -128,7 +128,7 @@ public class CountryDAO {
         }
     }
 
-    public static void delete(Country country) throws SQLException {
+    public static void deleteByID(int dbID) throws SQLException {
 
         try{
             String sqlStatement = "DELETE FROM countries WHERE Country_ID = ?";
@@ -137,7 +137,7 @@ public class CountryDAO {
 
             PreparedStatement ps = DbQuery.getPreparedStatement();
 
-            ps.setInt(1, country.getCountryID());
+            ps.setInt(1, dbID);
 
             ps.execute();
         }
