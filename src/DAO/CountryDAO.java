@@ -138,6 +138,21 @@ public class CountryDAO {
             ps.setInt(3, country.getCountryID());
 
             ps.execute();
+
+            sqlStatement = "SELECT * FROM countries WHERE Country_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, country.getCountryID());
+
+            ps.execute();
+
+            rs = ps.getResultSet();
+            rs.next();
+            
+            country.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
