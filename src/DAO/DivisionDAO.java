@@ -41,4 +41,37 @@ public class DivisionDAO {
         }
     }
 
+    public static Division selectByID(int dbID) throws SQLException {
+
+        Division division = new Division();
+
+        try {
+            String sqlStatement = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, dbID);
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            rs.next();
+
+            division.setDivisionID(rs.getInt("Division_ID"));
+            division.setDivisionName(rs.getString("Division"));
+            division.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+            division.setCreatedBy(rs.getString("Created_By"));
+            division.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+            division.setLastUpdatedBy(rs.getString("Last_Updated_By"));
+            division.setCountryID(rs.getInt("COUNTRY_ID"));
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return division;
+    }
 }
