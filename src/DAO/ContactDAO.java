@@ -1,6 +1,8 @@
 package DAO;
 
 import Model.Contact;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.Main;
 import utils.DbQuery;
 
@@ -64,5 +66,38 @@ public class ContactDAO {
         }
 
         return contact;
+    }
+
+    public static ObservableList<Contact> selectAll() throws SQLException {
+
+        ObservableList<Contact> contacts = FXCollections.observableArrayList();
+
+        try {
+            String sqlStatement = "SELECT * FROM contacts";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            while (rs.next()) {
+
+                Contact contact = new Contact();
+
+                contact.setContactID(rs.getInt("Contact_ID"));
+                contact.setContactName(rs.getString("Contact_Name"));
+                contact.setEmail(rs.getString("Email"));
+
+                contacts.add(contact);
+            }
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return contacts;
     }
 }
