@@ -8,6 +8,9 @@ public class Contact {
 
     private String email;
 
+    public Contact() {
+    }
+
     public Contact(String contactName, String email) {
         this.contactName = contactName;
         this.email = email;
