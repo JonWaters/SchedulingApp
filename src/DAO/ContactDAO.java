@@ -35,4 +35,34 @@ public class ContactDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public static Contact selectByID(int dbID) throws SQLException {
+
+        Contact contact = new Contact();
+
+        try {
+            String sqlStatement = "SELECT * FROM contacts WHERE Contact_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, dbID);
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            rs.next();
+
+            contact.setContactID(rs.getInt("Contact_ID"));
+            contact.setContactName(rs.getString("Contact_Name"));
+            contact.setEmail(rs.getString("Email"));
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return contact;
+    }
 }
