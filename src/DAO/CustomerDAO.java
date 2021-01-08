@@ -137,4 +137,45 @@ public class CustomerDAO {
 
         return customers;
     }
+
+    public static void update(Customer customer) throws  SQLException {
+
+        try {
+            String sqlStatement = "UPDATE customers SET Customer_Name = ?, Address = ?, " +
+                    "Postal_Code = ?, Phone = ?, Last_Update = NOW(), Last_Updated_By = ?, " +
+                    "Division_ID = ? WHERE Customer_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setString(1, customer.getCustomerName());
+            ps.setString(2, customer.getAddress());
+            ps.setString(3, customer.getPostalCode());
+            ps.setString(4, customer.getPhone());
+            ps.setString(5, customer.getLastUpdatedBy());
+            ps.setInt(6, customer.getDivisionID());
+            ps.setInt(7, customer.getCustomerID());
+
+            ps.execute();
+
+            sqlStatement = "SELECT * FROM customers WHERE Customer_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, customer.getCustomerID());
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+            rs.next();
+
+            customer.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
