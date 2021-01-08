@@ -24,16 +24,16 @@ public class Customer {
 
     private int divisionID;
 
+    public Customer() {
+    }
+
     public Customer(String customerName, String address, String postalCode,
-                    String phone, LocalDateTime createDate, String createdBy,
-                    LocalDateTime lastUpdateTime, String lastUpdatedBy, int divisionID) {
+                    String phone, String createdBy, String lastUpdatedBy, int divisionID) {
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
-        this.createDate = createDate;
         this.createdBy = createdBy;
-        this.lastUpdateTime = lastUpdateTime;
         this.lastUpdatedBy = lastUpdatedBy;
         this.divisionID = divisionID;
     }
