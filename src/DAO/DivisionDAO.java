@@ -1,6 +1,5 @@
 package DAO;
 
-import Model.Country;
 import Model.Division;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +15,7 @@ public class DivisionDAO {
 
     private final static Connection conn = Main.conn;
 
-    public static void create(Division division, Country country) throws SQLException {
+    public static void create(Division division) throws SQLException {
 
         try {
             String sqlStatement = "INSERT INTO first_level_divisions(Division, Create_Date, " +
@@ -30,7 +29,7 @@ public class DivisionDAO {
             ps.setString(1, division.getDivisionName());
             ps.setString(2, division.getCreatedBy());
             ps.setString(3, division.getLastUpdatedBy());
-            ps.setInt(4, country.getCountryID());
+            ps.setInt(4, division.getCountryID());
 
             ps.execute();
 
