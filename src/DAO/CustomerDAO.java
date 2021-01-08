@@ -1,6 +1,8 @@
 package DAO;
 
 import Model.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.Main;
 import utils.DbQuery;
 
@@ -94,5 +96,45 @@ public class CustomerDAO {
         }
 
         return customer;
+    }
+
+    public static ObservableList<Customer> selectAll() throws SQLException {
+
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
+
+        try {
+            String sqlStatement = "SELECT * FROM customers";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            while (rs.next()) {
+
+                Customer customer = new Customer();
+
+                customer.setCustomerID(rs.getInt("Customer_ID"));
+                customer.setCustomerName(rs.getString("Customer_Name"));
+                customer.setAddress(rs.getString("Address"));
+                customer.setPostalCode(rs.getString("Postal_Code"));
+                customer.setPhone(rs.getString("Phone"));
+                customer.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+                customer.setCreatedBy(rs.getString("Created_By"));
+                customer.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+                customer.setLastUpdatedBy(rs.getString("Last_Updated_By"));
+                customer.setDivisionID(rs.getInt("Division_ID"));
+
+                customers.add(customer);
+            }
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return customers;
     }
 }
