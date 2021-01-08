@@ -151,7 +151,7 @@ public class CountryDAO {
 
             rs = ps.getResultSet();
             rs.next();
-            
+
             country.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e){
