@@ -143,7 +143,7 @@ public class DivisionDAO {
             ps.setString(1, division.getDivisionName());
             ps.setString(2, division.getLastUpdatedBy());
             ps.setInt(3, division.getCountryID());
-            ps.setInt(4, division.getCountryID());
+            ps.setInt(4, division.getDivisionID());
 
             ps.execute();
 
@@ -166,4 +166,6 @@ public class DivisionDAO {
             System.out.println(e.getMessage());
         }
     }
+
+
 }
