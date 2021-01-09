@@ -18,13 +18,13 @@ public class User {
 
     private String lastUpdatedBy;
 
-    public User(String userName, String password, LocalDateTime createDate,
-                String createdBy, LocalDateTime lastUpdateTime, String lastUpdatedBy) {
+    public User() {
+    }
+
+    public User(String userName, String password, String createdBy, String lastUpdatedBy) {
         this.userName = userName;
         this.password = password;
-        this.createDate = createDate;
         this.createdBy = createdBy;
-        this.lastUpdateTime = lastUpdateTime;
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
