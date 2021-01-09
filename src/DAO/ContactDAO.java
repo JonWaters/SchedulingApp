@@ -100,4 +100,25 @@ public class ContactDAO {
 
         return contacts;
     }
+
+    public static void update(Contact contact) throws SQLException {
+
+        try {
+            String sqlStatement = "UPDATE contacts SET Contact_Name = ?, Email = ? " +
+                    "WHERE Contact_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setString(1, contact.getContactName());
+            ps.setString(2, contact.getEmail());
+            ps.setInt(3, contact.getContactID());
+
+            ps.execute();
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
