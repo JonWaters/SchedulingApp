@@ -88,4 +88,38 @@ public class UserDAO {
 
         return user;
     }
+
+    public static User selectByName(String userName) throws SQLException {
+
+        User user = new User();
+
+        try {
+            String sqlStatement = "SELECT * FROM users WHERE User_Name = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setString(1, userName);
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            rs.next();
+
+            user.setUserID(rs.getInt("User_ID"));
+            user.setUserName(rs.getString("User_Name"));
+            user.setPassword(rs.getString("Password"));
+            user.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+            user.setCreatedBy(rs.getString("Created_By"));
+            user.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+            user.setLastUpdatedBy(rs.getString("Last_Updated_By"));
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return user;
+    }
 }
