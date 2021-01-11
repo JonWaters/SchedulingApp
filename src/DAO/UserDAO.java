@@ -1,6 +1,8 @@
 package DAO;
 
 import Model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.Main;
 import utils.DbQuery;
 
@@ -121,5 +123,42 @@ public class UserDAO {
         }
 
         return user;
+    }
+
+    public static ObservableList<User> selectAll() throws SQLException {
+
+        ObservableList<User> users = FXCollections.observableArrayList();
+
+        try {
+            String sqlStatement = "SELECT * FROM users";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            while (rs.next()) {
+
+                User user = new User();
+
+                user.setUserID(rs.getInt("User_ID"));
+                user.setUserName(rs.getString("User_Name"));
+                user.setPassword(rs.getString("Password"));
+                user.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+                user.setCreatedBy(rs.getString("Created_By"));
+                user.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+                user.setLastUpdatedBy(rs.getString("Last_Updated_By"));
+
+                users.add(user);
+            }
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return users;
     }
 }
