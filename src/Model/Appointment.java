@@ -26,7 +26,7 @@ public class Appointment {
 
     private String lastUpdatedBy;
 
-    private int countryID;
+    private int customerID;
 
     private int userID;
 
@@ -35,7 +35,7 @@ public class Appointment {
     public Appointment(String title, String description, String location,
                        String type, LocalDateTime startTime, LocalDateTime endTime,
                        LocalDateTime createDate, String createdBy, LocalDateTime lastUpdateTime,
-                       String lastUpdatedBy, int countryID, int userID, int contactID) {
+                       String lastUpdatedBy, int customerID, int userID, int contactID) {
         this.title = title;
         this.description = description;
         this.location = location;
@@ -46,7 +46,7 @@ public class Appointment {
         this.createdBy = createdBy;
         this.lastUpdateTime = lastUpdateTime;
         this.lastUpdatedBy = lastUpdatedBy;
-        this.countryID = countryID;
+        this.customerID = customerID;
         this.userID = userID;
         this.contactID = contactID;
     }
@@ -139,12 +139,12 @@ public class Appointment {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public int getCountryID() {
-        return countryID;
+    public int getCustomerID() {
+        return customerID;
     }
 
-    public void setCountryID(int countryID) {
-        this.countryID = countryID;
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
 
     public int getUserID() {
