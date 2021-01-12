@@ -189,8 +189,24 @@ public class UserDAO {
             rs.next();
 
             user.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
-        catch(SQLException e) {
+    }
+
+    public static void deleteByID(int dbID) throws SQLException {
+
+        try {
+            String sqlStatement = "DELETE FROM users WHERE User_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, dbID);
+
+            ps.execute();
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
