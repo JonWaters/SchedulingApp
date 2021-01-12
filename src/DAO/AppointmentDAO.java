@@ -57,4 +57,44 @@ public class AppointmentDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public static Appointment selectByID(int dbID) throws SQLException {
+
+        Appointment appointment = new Appointment();
+
+        try {
+            String sqlStatement = "SELECT * FROM appointments WHERE Appointment_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, dbID);
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            rs.next();
+
+            appointment.setAppointmentID(rs.getInt("Appointment_ID"));
+            appointment.setTitle(rs.getString("Title"));
+            appointment.setDescription(rs.getString("Description"));
+            appointment.setLocation(rs.getString("Location"));
+            appointment.setType(rs.getString("Type"));
+            appointment.setStartTime(rs.getTimestamp("Start").toLocalDateTime());
+            appointment.setEndTime(rs.getTimestamp("End").toLocalDateTime());
+            appointment.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+            appointment.setCreatedBy(rs.getString("Created_By"));
+            appointment.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+            appointment.setCustomerID(rs.getInt("Customer_ID"));
+            appointment.setUserID(rs.getInt("User_ID"));
+            appointment.setContactID(rs.getInt("Contact_ID"));
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return appointment;
+    }
 }
