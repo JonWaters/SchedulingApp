@@ -32,19 +32,20 @@ public class Appointment {
 
     private int contactID;
 
+    public Appointment() {
+    }
+
     public Appointment(String title, String description, String location,
                        String type, LocalDateTime startTime, LocalDateTime endTime,
-                       LocalDateTime createDate, String createdBy, LocalDateTime lastUpdateTime,
-                       String lastUpdatedBy, int customerID, int userID, int contactID) {
+                       String createdBy, String lastUpdatedBy, int customerID, int userID,
+                       int contactID) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.createDate = createDate;
         this.createdBy = createdBy;
-        this.lastUpdateTime = lastUpdateTime;
         this.lastUpdatedBy = lastUpdatedBy;
         this.customerID = customerID;
         this.userID = userID;
