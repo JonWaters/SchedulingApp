@@ -161,4 +161,37 @@ public class UserDAO {
 
         return users;
     }
+
+    public static void update(User user) throws SQLException {
+
+        try {
+            String sqlStatement = "UPDATE users SET User_Name = ?, Password = ?, Last_Update = NOW(), " +
+                    "Last_Updated_By = ? WHERE User_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getLastUpdatedBy());
+            ps.setInt(4, user.getUserID());
+
+            ps.execute();
+
+            sqlStatement = "SELECT * FROM users WHERE User_ID = ?";
+
+            ps.setInt(1, user.getUserID());
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+            rs.next();
+
+            user.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
