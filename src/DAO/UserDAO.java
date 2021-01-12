@@ -206,7 +206,8 @@ public class UserDAO {
             ps.setInt(1, dbID);
 
             ps.execute();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
