@@ -4,10 +4,7 @@ import Model.Appointment;
 import sample.Main;
 import utils.DbQuery;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 
 public class AppointmentDAO {
 
@@ -35,6 +32,26 @@ public class AppointmentDAO {
             ps.setInt(9, appointment.getCustomerID());
             ps.setInt(10, appointment.getUserID());
             ps.setInt(11, appointment.getContactID());
+
+            ps.execute();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            appointment.setAppointmentID(rs.getInt(1));
+
+            sqlStatement = "SELECT * FROM appointments WHERE Appointment_ID = ?";
+
+            ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, appointment.getAppointmentID());
+
+            ps.execute();
+
+            rs = ps.getResultSet();
+            rs.next();
+
+            appointment.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+            appointment.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
