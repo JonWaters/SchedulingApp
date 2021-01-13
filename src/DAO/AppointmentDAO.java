@@ -142,4 +142,49 @@ public class AppointmentDAO {
 
         return appointments;
     }
+
+    public static void update(Appointment appointment) throws SQLException {
+
+        try {
+            String sqlStatement = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, " +
+                    "Type = ?, Start = ?, End = ?, Last_update = NOW(), Last_Updated_By = ?, " +
+                    "Customer_ID = ?, User_ID = ?, Contact_ID = ?, WHERE Appointment_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setString(1, appointment.getTitle());
+            ps.setString(2, appointment.getDescription());
+            ps.setString(3, appointment.getLocation());
+            ps.setString(4, appointment.getType());
+            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStartTime()));
+            ps.setTimestamp(6, Timestamp.valueOf(appointment.getEndTime()));
+            ps.setString(7, appointment.getLastUpdatedBy());
+            ps.setInt(8, appointment.getCustomerID());
+            ps.setInt(9, appointment.getUserID());
+            ps.setInt(10, appointment.getContactID());
+            ps.setInt(11, appointment.getAppointmentID());
+
+            ps.execute();
+
+            sqlStatement = "SELECT * FROM appointments WHERE Appointment_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, appointment.getAppointmentID());
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+            rs.next();
+
+            appointment.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
