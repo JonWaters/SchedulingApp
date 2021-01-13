@@ -187,4 +187,22 @@ public class AppointmentDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public static void deleteByID(int dbID) throws SQLException {
+
+        try{
+            String sqlStatement = "DELETE FROM appointments WHERE Appointment_ID = ?";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.setInt(1, dbID);
+
+            ps.execute();
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
