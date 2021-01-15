@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CustomerController implements Initializable {
+public class CustomersController implements Initializable {
 
     @FXML
     private TableView<?> customersTable;
