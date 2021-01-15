@@ -34,8 +34,8 @@
       <TextField layoutX="140.0" layoutY="287.0" prefHeight="27.0" prefWidth="456.0" />
       <DatePicker layoutX="140.0" layoutY="378.0" />
       <DatePicker layoutX="140.0" layoutY="421.0" />
-      <TextField layoutX="140.0" layoutY="463.0" prefHeight="27.0" prefWidth="188.0" />
-      <TextField layoutX="140.0" layoutY="507.0" prefHeight="27.0" prefWidth="188.0" />
+      <TextField editable="false" layoutX="140.0" layoutY="463.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
+      <TextField editable="false" layoutX="140.0" layoutY="507.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
       <Label layoutX="356.0" layoutY="383.0" text="Start Time:" />
       <Label layoutX="359.0" layoutY="426.0" text="End Time:" />
       <ComboBox layoutX="140.0" layoutY="332.0" prefHeight="27.0" prefWidth="188.0" />
