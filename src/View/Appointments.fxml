@@ -34,7 +34,7 @@
       <Button layoutX="752.0" layoutY="300.0" mnemonicParsing="false" onAction="#customersButttonAction" prefHeight="29.0" prefWidth="130.0" text="Customers" />
       <Button layoutX="752.0" layoutY="344.0" mnemonicParsing="false" onAction="#reportsButtonAction" prefHeight="27.0" prefWidth="130.0" text="Reports" />
       <Button layoutX="829.0" layoutY="550.0" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="27.0" prefWidth="53.0" text="Exit" />
-      <RadioButton fx:id="weekRadioButton" layoutX="46.0" layoutY="142.0" mnemonicParsing="false" text="Week" />
-      <RadioButton fx:id="monthRadioButton" layoutX="120.0" layoutY="142.0" mnemonicParsing="false" text="Month" />
+      <RadioButton fx:id="weekRadioButton" layoutX="46.0" layoutY="142.0" mnemonicParsing="false" onAction="#weekRadioButtonAction" text="Week" />
+      <RadioButton fx:id="monthRadioButton" layoutX="120.0" layoutY="142.0" mnemonicParsing="false" onAction="#monthRadioButtonAction" text="Month" />
    </children>
 </AnchorPane>
