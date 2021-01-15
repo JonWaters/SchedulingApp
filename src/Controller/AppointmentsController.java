@@ -1,12 +1,18 @@
 package Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,8 +55,13 @@ public class AppointmentsController implements Initializable {
     private RadioButton monthRadioButton;
 
     @FXML
-    void customersButttonAction(ActionEvent event) {
+    void customersButtonAction(ActionEvent event) throws IOException {
 
+        Parent parent = FXMLLoader.load(getClass().getResource("../View/Customers.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -61,11 +72,17 @@ public class AppointmentsController implements Initializable {
     @FXML
     void exitButtonAction(ActionEvent event) {
 
+        System.exit(0);
     }
 
     @FXML
-    void modifyAppointmentButtonAction(ActionEvent event) {
+    void modifyAppointmentButtonAction(ActionEvent event) throws IOException {
 
+        Parent parent = FXMLLoader.load(getClass().getResource("../View/ModifyAppointment.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -74,13 +91,23 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void newAppoinmentButtonAction(ActionEvent event) {
+    void newAppointmentButtonAction(ActionEvent event) throws IOException {
 
+        Parent parent = FXMLLoader.load(getClass().getResource("../View/NewAppointment.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    void reportsButtonAction(ActionEvent event) {
+    void reportsButtonAction(ActionEvent event) throws IOException {
 
+        Parent parent = FXMLLoader.load(getClass().getResource("../View/Reports.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
