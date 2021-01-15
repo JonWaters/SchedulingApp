@@ -14,12 +14,12 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="829.0" layoutY="550.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="53.0" text="Back" />
-      <TextArea layoutX="38.0" layoutY="125.0" prefHeight="350.0" prefWidth="700.0" />
-      <RadioButton layoutX="38.0" layoutY="489.0" mnemonicParsing="false" text="Type" />
-      <RadioButton layoutX="117.0" layoutY="489.0" mnemonicParsing="false" text="Month" />
-      <RadioButton layoutX="201.0" layoutY="489.0" mnemonicParsing="false" text="Schedule" />
-      <RadioButton layoutX="303.0" layoutY="489.0" mnemonicParsing="false" text="Location" />
-      <Button layoutX="703.0" layoutY="550.0" mnemonicParsing="false" text="Generate Report" />
+      <Button layoutX="829.0" layoutY="550.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="27.0" prefWidth="53.0" text="Back" />
+      <TextArea fx:id="reportsTextArea" layoutX="38.0" layoutY="125.0" prefHeight="350.0" prefWidth="700.0" />
+      <RadioButton fx:id="typeRadioButton" layoutX="38.0" layoutY="489.0" mnemonicParsing="false" text="Type" />
+      <RadioButton fx:id="monthRadioButton" layoutX="117.0" layoutY="489.0" mnemonicParsing="false" text="Month" />
+      <RadioButton fx:id="scheduleRadioButton" layoutX="201.0" layoutY="489.0" mnemonicParsing="false" text="Schedule" />
+      <RadioButton fx:id="locationRadioButton" layoutX="303.0" layoutY="489.0" mnemonicParsing="false" text="Location" />
+      <Button layoutX="703.0" layoutY="550.0" mnemonicParsing="false" onAction="#generateButtonAction" text="Generate Report" />
    </children>
 </AnchorPane>
