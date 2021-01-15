@@ -1,11 +1,17 @@
 package Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,8 +33,13 @@ public class ReportsController implements Initializable {
     private RadioButton locationRadioButton;
 
     @FXML
-    void backButtonAction(ActionEvent event) {
+    void backButtonAction(ActionEvent event) throws IOException {
 
+        Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
