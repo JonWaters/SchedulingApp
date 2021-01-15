@@ -3,8 +3,8 @@ package DAO;
 import Model.Country;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.Main;
-import utils.DbQuery;
+import Main.Main;
+import Utils.DbQuery;
 
 import java.sql.*;
 
