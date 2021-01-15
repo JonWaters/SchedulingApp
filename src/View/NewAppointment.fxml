@@ -16,7 +16,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="822.0" layoutY="550.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Cancel" />
+      <Button layoutX="822.0" layoutY="550.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="27.0" prefWidth="60.0" text="Cancel" />
       <Label layoutX="33.0" layoutY="124.0" text="Appointment ID:" />
       <Label layoutX="93.0" layoutY="166.0" text="Title:" />
       <Label layoutX="59.0" layoutY="210.0" text="Description:" />
@@ -28,23 +28,23 @@
       <Label layoutX="51.0" layoutY="468.0" text="Customer ID:" />
       <Label layoutX="77.0" layoutY="512.0" text="User ID:" />
       <TextField editable="false" layoutX="140.0" layoutY="119.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
-      <TextField layoutX="140.0" layoutY="161.0" prefHeight="27.0" prefWidth="456.0" />
-      <TextField layoutX="140.0" layoutY="205.0" prefHeight="27.0" prefWidth="456.0" />
-      <TextField layoutX="140.0" layoutY="245.0" prefHeight="27.0" prefWidth="456.0" />
-      <TextField layoutX="140.0" layoutY="287.0" prefHeight="27.0" prefWidth="456.0" />
-      <DatePicker layoutX="140.0" layoutY="378.0" />
-      <DatePicker layoutX="140.0" layoutY="421.0" />
+      <TextField fx:id="titleText" layoutX="140.0" layoutY="161.0" prefHeight="27.0" prefWidth="456.0" />
+      <TextField fx:id="descriptionText" layoutX="140.0" layoutY="205.0" prefHeight="27.0" prefWidth="456.0" />
+      <TextField fx:id="locationText" layoutX="140.0" layoutY="245.0" prefHeight="27.0" prefWidth="456.0" />
+      <TextField fx:id="typeText" layoutX="140.0" layoutY="287.0" prefHeight="27.0" prefWidth="456.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="140.0" layoutY="378.0" />
+      <DatePicker fx:id="endDatePicker" layoutX="140.0" layoutY="421.0" />
       <TextField editable="false" layoutX="140.0" layoutY="463.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
       <TextField editable="false" layoutX="140.0" layoutY="507.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
       <Label layoutX="356.0" layoutY="383.0" text="Start Time:" />
       <Label layoutX="359.0" layoutY="426.0" text="End Time:" />
-      <ComboBox layoutX="140.0" layoutY="332.0" prefHeight="27.0" prefWidth="188.0" />
+      <ComboBox fx:id="contactComboBox" layoutX="140.0" layoutY="332.0" prefHeight="27.0" prefWidth="188.0" />
       <Label layoutX="384.0" layoutY="512.0" text="User:" />
       <Label layoutX="357.0" layoutY="468.0" text="Customer:" />
-      <ComboBox layoutX="433.0" layoutY="463.0" prefHeight="27.0" prefWidth="161.0" />
-      <ComboBox layoutX="433.0" layoutY="507.0" prefHeight="27.0" prefWidth="161.0" />
-      <Button layoutX="759.0" layoutY="550.0" mnemonicParsing="false" text="Save" />
-      <Spinner layoutX="433.0" layoutY="378.0" />
-      <Spinner layoutX="433.0" layoutY="421.0" />
+      <ComboBox fx:id="customerComboBox" layoutX="433.0" layoutY="463.0" prefHeight="27.0" prefWidth="161.0" />
+      <ComboBox fx:id="userComboBox" layoutX="433.0" layoutY="507.0" prefHeight="27.0" prefWidth="161.0" />
+      <Button layoutX="759.0" layoutY="550.0" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" />
+      <Spinner fx:id="startTimeSpinner" layoutX="433.0" layoutY="378.0" />
+      <Spinner fx:id="endTimeSpinner" layoutX="433.0" layoutY="421.0" />
    </children>
 </AnchorPane>
