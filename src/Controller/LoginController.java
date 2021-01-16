@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -68,13 +69,10 @@ public class LoginController implements Initializable {
 
         if (validUser()) {
 
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
-            Scene scene = new Scene(parent);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            openAppointmentsScreen(event);
         } else {
-            System.out.println("User not valid");
+
+            loginError();
         }
     }
 
@@ -91,6 +89,15 @@ public class LoginController implements Initializable {
 
         setScreenLang();
         setTimeZoneLabel();
+    }
+
+    private void openAppointmentsScreen(ActionEvent event) throws IOException {
+
+        Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void setScreenLang() {
@@ -133,5 +140,14 @@ public class LoginController implements Initializable {
             System.out.println(e.getMessage());
         }
         return isValid;
+    }
+
+    private void loginError() {
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        alert.setTitle(rb.getString("error"));
+        alert.setHeaderText(rb.getString("errorText"));
+        alert.showAndWait();
     }
 }
