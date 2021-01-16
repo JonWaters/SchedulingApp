@@ -9,10 +9,13 @@ import Utils.DbConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.TimeZone;
 
 public class Main extends Application {
 
     public static Connection conn = null;
+
+    public static TimeZone timeZone = TimeZone.getDefault();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -26,23 +29,6 @@ public class Main extends Application {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
         conn = DbConnection.startConnection();
-        /*
-        Country usa = new Country();
-        usa = CountryDAO.selectByID(4);
-
-        usa.setLastUpdatedBy("Steve");
-
-        CountryDAO.delete(usa);
-
-        usa = CountryDAO.selectByID(4);
-
-        System.out.println(usa.getCountryID());
-        System.out.println(usa.getCountryName());
-        System.out.println(usa.getCreateDate());
-        System.out.println(usa.getCreatedBy());
-        System.out.println(usa.getLastUpdateTime());
-        System.out.println(usa.getLastUpdatedBy());
-        */
 
         launch(args);
     }
