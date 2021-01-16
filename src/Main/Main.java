@@ -25,6 +25,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public static TimeZone getTimeZone() {
+
+        return timeZone;
+    }
+
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 

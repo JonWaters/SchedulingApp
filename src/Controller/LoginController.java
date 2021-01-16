@@ -1,5 +1,6 @@
 package Controller;
 
+import Main.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,12 +17,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class LoginController implements Initializable {
 
     Locale userLocale = Locale.FRENCH;
 
     ResourceBundle rb = ResourceBundle.getBundle("Lang/rb", userLocale);
+
+    private TimeZone timeZone = Main.getTimeZone();
 
     @FXML
     private Label userNameLabel;
@@ -75,6 +79,7 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         setScreenLang();
+        setTimeZoneLabel();
     }
 
     private void setScreenLang() {
@@ -84,5 +89,10 @@ public class LoginController implements Initializable {
         timezoneLabel.setText(rb.getString("timezoneLabel"));
         cancelButton.setText(rb.getString("cancelButton"));
         loginButton.setText(rb.getString("loginButton"));
+    }
+
+    private void setTimeZoneLabel() {
+
+        zoneIdLabel.setText(timeZone.getID());
     }
 }
