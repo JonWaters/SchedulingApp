@@ -14,9 +14,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
+    Locale userLocale = Locale.FRENCH;
+
+    ResourceBundle rb = ResourceBundle.getBundle("Lang/rb", userLocale);
 
     @FXML
     private Label userNameLabel;
@@ -69,5 +74,15 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        setScreenLang();
+    }
+
+    private void setScreenLang() {
+
+        userNameLabel.setText(rb.getString("userNameLabel"));
+        passwordLabel.setText(rb.getString("passwordLabel"));
+        timezoneLabel.setText(rb.getString("timezoneLabel"));
+        cancelButton.setText(rb.getString("cancelButton"));
+        loginButton.setText(rb.getString("loginButton"));
     }
 }
