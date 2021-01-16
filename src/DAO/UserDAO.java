@@ -108,15 +108,16 @@ public class UserDAO {
 
             ResultSet rs = ps.getResultSet();
 
-            rs.next();
+            if (rs.next()) {
 
-            user.setUserID(rs.getInt("User_ID"));
-            user.setUserName(rs.getString("User_Name"));
-            user.setPassword(rs.getString("Password"));
-            user.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
-            user.setCreatedBy(rs.getString("Created_By"));
-            user.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
-            user.setLastUpdatedBy(rs.getString("Last_Updated_By"));
+                user.setUserID(rs.getInt("User_ID"));
+                user.setUserName(rs.getString("User_Name"));
+                user.setPassword(rs.getString("Password"));
+                user.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+                user.setCreatedBy(rs.getString("Created_By"));
+                user.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+                user.setLastUpdatedBy(rs.getString("Last_Updated_By"));
+            }
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());

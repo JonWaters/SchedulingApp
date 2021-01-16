@@ -1,6 +1,8 @@
 package Controller;
 
+import DAO.UserDAO;
 import Main.Main;
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +17,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.EventObject;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
@@ -26,6 +30,8 @@ public class LoginController implements Initializable {
     ResourceBundle rb = ResourceBundle.getBundle("Lang/rb", userLocale);
 
     private TimeZone timeZone = Main.getTimeZone();
+
+    public static User currentUser;
 
     @FXML
     private Label userNameLabel;
@@ -58,13 +64,18 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void loginButtonAction(ActionEvent event) throws IOException {
+    void loginButtonAction(ActionEvent event) throws IOException, SQLException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        if (validUser()) {
+
+            Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            System.out.println("User not valid");
+        }
     }
 
     /**
@@ -94,5 +105,33 @@ public class LoginController implements Initializable {
     private void setTimeZoneLabel() {
 
         zoneIdLabel.setText(timeZone.getID());
+    }
+
+    public static User getCurrentUser() {
+
+        return currentUser;
+    }
+
+    private Boolean validUser() throws SQLException {
+
+        Boolean isValid = false;
+
+        try {
+
+            String userName = userNameText.getText();
+            String password = passwordText.getText();
+            currentUser = UserDAO.selectByName(userName);
+
+            if (currentUser.getPassword() == null) {
+
+            } else if (currentUser.getPassword().equals(password)) {
+
+                isValid = true;
+            }
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return isValid;
     }
 }
