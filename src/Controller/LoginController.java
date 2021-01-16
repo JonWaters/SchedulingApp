@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -18,7 +19,22 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     @FXML
+    private Label userNameLabel;
+
+    @FXML
+    private Label passwordLabel;
+
+    @FXML
     private Label timezoneLabel;
+
+    @FXML
+    private Label zoneIdLabel;
+
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private Button loginButton;
 
     @FXML
     private TextField userNameText;
