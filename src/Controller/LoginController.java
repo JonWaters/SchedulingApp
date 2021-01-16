@@ -26,7 +26,7 @@ import java.util.TimeZone;
 
 public class LoginController implements Initializable {
 
-    Locale userLocale = Locale.FRENCH;
+    Locale userLocale = Locale.getDefault();
 
     ResourceBundle rb = ResourceBundle.getBundle("Lang/rb", userLocale);
 
