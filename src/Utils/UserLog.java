@@ -13,21 +13,22 @@ import java.time.format.DateTimeFormatter;
 
 public class UserLog {
 
-    static User currentUser = LoginController.getCurrentUser();
+    static User currentUser;
 
     static ZoneId utcZoneID = ZoneId.of("UTC");
 
-    static DateTimeFormatter globalFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm:ss a z");
+    static DateTimeFormatter globalFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm:ssa z");
 
     public static void writeLog(int entryType) throws IOException {
 
         LocalDateTime currentDateTimeUTC = LocalDateTime.now(utcZoneID);
         ZonedDateTime zonedDateTimeUTC = currentDateTimeUTC.atZone(utcZoneID);
         String dateTimeString = globalFormat.format(zonedDateTimeUTC);
-        
+
         try {
             FileWriter fileWriter = new FileWriter("login_activity.txt", true);
             PrintWriter printWriter = new PrintWriter(fileWriter);
+            currentUser = LoginController.getCurrentUser();
             String userName = currentUser.getUserName();
 
             if (userName == null) {

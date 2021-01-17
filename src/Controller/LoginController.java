@@ -3,6 +3,7 @@ package Controller;
 import DAO.UserDAO;
 import Main.Main;
 import Model.User;
+import Utils.UserLog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -69,9 +70,11 @@ public class LoginController implements Initializable {
 
         if (validUser()) {
 
+            UserLog.writeLog(1);
             openAppointmentsScreen(event);
         } else {
 
+            UserLog.writeLog(0);
             loginError();
         }
     }

@@ -1,0 +1,5 @@
+Unknown user was denied access on 01/17/2021 at 05:08:14 PM UTC
+test was granted access on 01/17/2021 at 05:08:44 PM UTC
+admin was denied access on 01/17/2021 at 05:10:58PM UTC
+Unknown user was denied access on 01/17/2021 at 05:11:44PM UTC
+admin was granted access on 01/17/2021 at 05:13:01PM UTC
