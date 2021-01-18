@@ -1,5 +1,8 @@
 package Main;
 
+import DAO.CustomerDAO;
+import Model.Customer;
+import Model.CustomerDisplay;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,6 +37,13 @@ public class Main extends Application {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
         conn = DbConnection.startConnection();
+
+        Customer myCustomer = CustomerDAO.selectByID(1);
+
+        CustomerDisplay customerDisplay = new CustomerDisplay(myCustomer);
+
+        System.out.println(customerDisplay.getAddress());
+        System.out.println(customerDisplay.getDivisionName());
 
         launch(args);
     }

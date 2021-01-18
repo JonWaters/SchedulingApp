@@ -4,25 +4,25 @@ import java.time.LocalDateTime;
 
 public class Customer {
 
-    private int customerID;
+    protected int customerID;
 
-    private String customerName;
+    protected String customerName;
 
-    private String address;
+    protected String address;
 
-    private String postalCode;
+    protected String postalCode;
 
-    private String phone;
+    protected String phone;
 
-    private LocalDateTime createDate;
+    protected LocalDateTime createDate;
 
-    private String createdBy;
+    protected String createdBy;
 
-    private LocalDateTime lastUpdateTime;
+    protected LocalDateTime lastUpdateTime;
 
-    private String lastUpdatedBy;
+    protected String lastUpdatedBy;
 
-    private int divisionID;
+    protected int divisionID;
 
     public Customer() {
     }
