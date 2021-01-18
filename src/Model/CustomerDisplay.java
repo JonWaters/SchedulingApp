@@ -15,6 +15,10 @@ public class CustomerDisplay extends Customer {
         this.address = customer.address;
         this.postalCode = customer.postalCode;
         this.phone = customer.phone;
+        this.createDate = customer.createDate;
+        this.createdBy = customer.createdBy;
+        this.lastUpdateTime = customer.lastUpdateTime;
+        this.lastUpdatedBy = customer.lastUpdatedBy;
         this.divisionID = customer.divisionID;
 
         try {
