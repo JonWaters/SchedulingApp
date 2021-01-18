@@ -38,13 +38,6 @@ public class Main extends Application {
 
         conn = DbConnection.startConnection();
 
-        Customer myCustomer = CustomerDAO.selectByID(1);
-
-        CustomerDisplay customerDisplay = new CustomerDisplay(myCustomer);
-
-        System.out.println(customerDisplay.getAddress());
-        System.out.println(customerDisplay.getDivisionName());
-
         launch(args);
     }
 }
