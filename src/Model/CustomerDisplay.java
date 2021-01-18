@@ -15,6 +15,7 @@ public class CustomerDisplay extends Customer {
         this.address = customer.address;
         this.postalCode = customer.postalCode;
         this.phone = customer.phone;
+        this.divisionID = customer.divisionID;
 
         try {
             this.divisionName = DivisionDAO.selectByID(customer.divisionID).getDivisionName();
