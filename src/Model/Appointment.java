@@ -4,33 +4,33 @@ import java.time.LocalDateTime;
 
 public class Appointment {
 
-    private int appointmentID;
+    protected int appointmentID;
 
-    private String title;
+    protected String title;
 
-    private String description;
+    protected String description;
 
-    private String location;
+    protected String location;
 
-    private String type;
+    protected String type;
 
-    private LocalDateTime startTime;
+    protected LocalDateTime startTime;
 
-    private LocalDateTime endTime;
+    protected LocalDateTime endTime;
 
-    private LocalDateTime createDate;
+    protected LocalDateTime createDate;
 
-    private String createdBy;
+    protected String createdBy;
 
-    private LocalDateTime lastUpdateTime;
+    protected LocalDateTime lastUpdateTime;
 
-    private String lastUpdatedBy;
+    protected String lastUpdatedBy;
 
-    private int customerID;
+    protected int customerID;
 
-    private int userID;
+    protected int userID;
 
-    private int contactID;
+    protected int contactID;
 
     public Appointment() {
     }

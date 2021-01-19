@@ -1,6 +1,9 @@
 package Main;
 
+import DAO.AppointmentDAO;
 import DAO.CustomerDAO;
+import Model.Appointment;
+import Model.AppointmentDisplay;
 import Model.Customer;
 import Model.CustomerDisplay;
 import javafx.application.Application;

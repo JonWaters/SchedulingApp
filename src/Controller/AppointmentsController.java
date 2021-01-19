@@ -1,5 +1,9 @@
 package Controller;
 
+import DAO.AppointmentDAO;
+import Model.Appointment;
+import Model.AppointmentDisplay;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,49 +14,54 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
 
     @FXML
-    private TableView<?> appointmentsTable;
+    private TableView<AppointmentDisplay> appointmentsTable;
 
     @FXML
-    private TableColumn<?, ?> idColumn;
+    private TableColumn<AppointmentDisplay, Integer> idColumn;
 
     @FXML
-    private TableColumn<?, ?> titleColumn;
+    private TableColumn<AppointmentDisplay, String> titleColumn;
 
     @FXML
-    private TableColumn<?, ?> descriptionColumn;
+    private TableColumn<AppointmentDisplay, String> descriptionColumn;
 
     @FXML
-    private TableColumn<?, ?> locationColumn;
+    private TableColumn<AppointmentDisplay, String> locationColumn;
 
     @FXML
-    private TableColumn<?, ?> contactColumn;
+    private TableColumn<AppointmentDisplay, String> contactColumn;
 
     @FXML
-    private TableColumn<?, ?> typeColumn;
+    private TableColumn<AppointmentDisplay, String> typeColumn;
 
     @FXML
-    private TableColumn<?, ?> startColumn;
+    private TableColumn<AppointmentDisplay, String> startColumn;
 
     @FXML
-    private TableColumn<?, ?> endColumn;
+    private TableColumn<AppointmentDisplay, String> endColumn;
 
     @FXML
-    private TableColumn<?, ?> customerIdColumn;
+    private TableColumn<AppointmentDisplay, Integer> customerIdColumn;
 
     @FXML
     private RadioButton weekRadioButton;
 
     @FXML
     private RadioButton monthRadioButton;
+
+    public AppointmentsController() {
+    }
 
     @FXML
     void customersButtonAction(ActionEvent event) throws IOException {
@@ -126,5 +135,14 @@ public class AppointmentsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTimeString"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTimeString"));
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
     }
 }
