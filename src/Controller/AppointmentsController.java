@@ -3,6 +3,7 @@ package Controller;
 import DAO.AppointmentDAO;
 import Model.Appointment;
 import Model.AppointmentDisplay;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
@@ -144,5 +146,36 @@ public class AppointmentsController implements Initializable {
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startTimeString"));
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endTimeString"));
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+
+        try {
+            displayAppointmentsByWeek();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void displayAppointmentsByWeek() throws SQLException {
+
+        try {
+            ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
+            ObservableList<AppointmentDisplay> appointments = FXCollections.observableArrayList();
+
+            LocalDateTime today = LocalDateTime.now();
+            LocalDateTime oneWeek = today.plusDays(6);
+
+            for (Appointment appointment : dbAppointments) {
+
+                if (appointment.getStartTime().isAfter(today) &&
+                        appointment.getStartTime().isBefore(oneWeek)) {
+                    AppointmentDisplay newAppointment = new AppointmentDisplay(appointment);
+                    appointments.add(newAppointment);
+                }
+            }
+
+            appointmentsTable.setItems(appointments);
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
