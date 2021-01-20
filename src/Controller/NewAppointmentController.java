@@ -224,6 +224,20 @@ public class NewAppointmentController implements Initializable {
         return fieldsNull;
     }
 
+    private boolean startAfterEnd(Appointment appointment) {
+
+        boolean startAfterEnd = false;
+        LocalDateTime startTime = appointment.getStartTime();
+        LocalDateTime endTime = appointment.getEndTime();
+
+        if (startTime.isAfter(endTime)) {
+            startAfterEnd = true;
+        }
+
+        return startAfterEnd;
+    }
+    
+
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
         {
             setConverter(new LocalTimeStringConverter(timeFormat,null));
