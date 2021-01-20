@@ -34,15 +34,15 @@
       <TextField fx:id="typeText" layoutX="140.0" layoutY="287.0" prefHeight="27.0" prefWidth="456.0" />
       <DatePicker fx:id="startDatePicker" layoutX="140.0" layoutY="378.0" />
       <DatePicker fx:id="endDatePicker" layoutX="140.0" layoutY="421.0" />
-      <TextField editable="false" layoutX="140.0" layoutY="463.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
-      <TextField editable="false" layoutX="140.0" layoutY="507.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
+      <TextField fx:id="customerIdText" editable="false" layoutX="140.0" layoutY="463.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
+      <TextField fx:id="userIdText" editable="false" layoutX="140.0" layoutY="507.0" prefHeight="27.0" prefWidth="188.0" promptText="Auto Generated" />
       <Label layoutX="356.0" layoutY="383.0" text="Start Time:" />
       <Label layoutX="359.0" layoutY="426.0" text="End Time:" />
       <ComboBox fx:id="contactComboBox" layoutX="140.0" layoutY="332.0" prefHeight="27.0" prefWidth="188.0" />
       <Label layoutX="384.0" layoutY="512.0" text="User:" />
       <Label layoutX="357.0" layoutY="468.0" text="Customer:" />
-      <ComboBox fx:id="customerComboBox" layoutX="433.0" layoutY="463.0" prefHeight="27.0" prefWidth="161.0" />
-      <ComboBox fx:id="userComboBox" layoutX="433.0" layoutY="507.0" prefHeight="27.0" prefWidth="161.0" />
+      <ComboBox fx:id="customerComboBox" layoutX="433.0" layoutY="463.0" onAction="#customerComboBoxAction" prefHeight="27.0" prefWidth="161.0" />
+      <ComboBox fx:id="userComboBox" layoutX="433.0" layoutY="507.0" onAction="#userComboBoxAction" prefHeight="27.0" prefWidth="161.0" />
       <Button layoutX="759.0" layoutY="550.0" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" />
       <Spinner fx:id="startTimeSpinner" layoutX="433.0" layoutY="378.0" />
       <Spinner fx:id="endTimeSpinner" layoutX="433.0" layoutY="421.0" />

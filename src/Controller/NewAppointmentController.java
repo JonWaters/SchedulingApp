@@ -22,6 +22,8 @@ import javafx.util.converter.LocalTimeStringConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -35,6 +37,12 @@ public class NewAppointmentController implements Initializable {
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
     private ObservableList<User> userList = FXCollections.observableArrayList();
+
+    private Contact selectedContact;
+
+    private Customer selectedCustomer;
+
+    private User selectedUser;
 
     @FXML
     private TextField titleText;
@@ -53,6 +61,12 @@ public class NewAppointmentController implements Initializable {
 
     @FXML
     private DatePicker endDatePicker;
+
+    @FXML
+    private TextField customerIdText;
+
+    @FXML
+    private TextField userIdText;
 
     @FXML
     private ComboBox<Contact> contactComboBox;
@@ -80,13 +94,33 @@ public class NewAppointmentController implements Initializable {
     }
 
     @FXML
+    void customerComboBoxAction(ActionEvent event) {
+
+        selectedCustomer = customerComboBox.getSelectionModel().getSelectedItem();
+        customerIdText.setText(String.valueOf(selectedCustomer.getCustomerID()));
+    }
+
+    @FXML
     void saveButtonAction(ActionEvent event) throws IOException {
+
+        String title = titleText.getText();
+        String description = descriptionText.getText();
+        String location = locationText.getText();
+        String type = typeText.getText();
+
 
         Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    void userComboBoxAction(ActionEvent event) {
+
+        selectedUser = userComboBox.getSelectionModel().getSelectedItem();
+        userIdText.setText(String.valueOf(selectedUser.getUserID()));
     }
 
     /**
@@ -123,6 +157,13 @@ public class NewAppointmentController implements Initializable {
         catch(SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private LocalDateTime getStartDateTime() {
+
+        LocalDateTime startDateTime;
+        LocalDate startDate = startDatePicker.getValue();
+        LocalTime startTime = startTimeSpinner.getValue();
     }
 
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
