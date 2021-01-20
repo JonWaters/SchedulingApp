@@ -1,6 +1,8 @@
 package Controller;
 
 import DAO.ContactDAO;
+import DAO.CustomerDAO;
+import DAO.UserDAO;
 import Model.Contact;
 import Model.Customer;
 import Model.User;
@@ -98,11 +100,6 @@ public class NewAppointmentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        try {
-            contactList = ContactDAO.selectAll();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
         setDefaultValues();
     }
 
@@ -113,7 +110,19 @@ public class NewAppointmentController implements Initializable {
         endSVF.setValue(LocalTime.of(17, 00));
         endTimeSpinner.setValueFactory(endSVF);
 
-        contactComboBox.setItems(contactList);
+        try {
+            contactList = ContactDAO.selectAll();
+            contactComboBox.setItems(contactList);
+
+            customerList = CustomerDAO.selectAll();
+            customerComboBox.setItems(customerList);
+
+            userList = UserDAO.selectAll();
+            userComboBox.setItems(userList);
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
