@@ -1,8 +1,10 @@
 package Controller;
 
+import DAO.AppointmentDAO;
 import DAO.ContactDAO;
 import DAO.CustomerDAO;
 import DAO.UserDAO;
+import Model.Appointment;
 import Model.Contact;
 import Model.Customer;
 import Model.User;
@@ -31,6 +33,8 @@ import java.util.ResourceBundle;
 public class NewAppointmentController implements Initializable {
 
     private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+
+    private User currentUser = LoginController.getCurrentUser();
 
     private ObservableList<Contact> contactList = FXCollections.observableArrayList();
 
@@ -107,7 +111,23 @@ public class NewAppointmentController implements Initializable {
         String description = descriptionText.getText();
         String location = locationText.getText();
         String type = typeText.getText();
+        LocalDateTime startTime = getStartDateTime();
+        LocalDateTime endTime = getEndDateTime();
+        String createdBy = currentUser.getUserName();
+        String lastUpdatedBy = currentUser.getUserName();
+        int customerID = selectedCustomer.getCustomerID();
+        int userID = selectedUser.getUserID();
+        int contactID = contactComboBox.getSelectionModel().getSelectedItem().getContactID();
 
+        Appointment newAppointment = new Appointment(title, description, location, type,
+                startTime, endTime, createdBy, lastUpdatedBy, customerID, userID, contactID);
+
+        try {
+            AppointmentDAO.create(newAppointment);
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
         Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
         Scene scene = new Scene(parent);
@@ -161,9 +181,20 @@ public class NewAppointmentController implements Initializable {
 
     private LocalDateTime getStartDateTime() {
 
-        LocalDateTime startDateTime;
         LocalDate startDate = startDatePicker.getValue();
         LocalTime startTime = startTimeSpinner.getValue();
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+
+        return startDateTime;
+    }
+
+    private LocalDateTime getEndDateTime() {
+
+        LocalDate endDate = endDatePicker.getValue();
+        LocalTime endTime = endTimeSpinner.getValue();
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+
+        return endDateTime;
     }
 
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {

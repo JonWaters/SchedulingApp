@@ -32,26 +32,6 @@ public class DivisionDAO {
             ps.setInt(4, division.getCountryID());
 
             ps.execute();
-
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-            division.setDivisionID(rs.getInt(1));
-
-            sqlStatement = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
-
-            DbQuery.setPreparedStatement(conn, sqlStatement);
-
-            ps = DbQuery.getPreparedStatement();
-
-            ps.setInt(1, division.getDivisionID());
-
-            ps.execute();
-
-            rs = ps.getResultSet();
-            rs.next();
-
-            division.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
-            division.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -145,21 +125,6 @@ public class DivisionDAO {
             ps.setInt(4, division.getDivisionID());
 
             ps.execute();
-
-            sqlStatement = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
-
-            DbQuery.setPreparedStatement(conn, sqlStatement);
-
-            ps = DbQuery.getPreparedStatement();
-
-            ps.setInt(1, division.getDivisionID());
-
-            ps.execute();
-
-            ResultSet rs = ps.getResultSet();
-            rs.next();
-
-            division.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e){
             System.out.println(e.getMessage());

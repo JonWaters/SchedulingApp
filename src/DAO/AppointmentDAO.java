@@ -15,7 +15,7 @@ public class AppointmentDAO {
     public static void create(Appointment appointment) throws SQLException {
 
         try {
-            String sqlStatement = "INSERT INTO appointments(Title, Description, Location, +" +
+            String sqlStatement = "INSERT INTO appointments(Title, Description, Location, " +
                     "Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, " +
                     "Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, NOW(), ?, NOW(), ?, ?, ?, ?)";
 
@@ -36,24 +36,6 @@ public class AppointmentDAO {
             ps.setInt(11, appointment.getContactID());
 
             ps.execute();
-
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-            appointment.setAppointmentID(rs.getInt(1));
-
-            sqlStatement = "SELECT * FROM appointments WHERE Appointment_ID = ?";
-
-            ps = DbQuery.getPreparedStatement();
-
-            ps.setInt(1, appointment.getAppointmentID());
-
-            ps.execute();
-
-            rs = ps.getResultSet();
-            rs.next();
-
-            appointment.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
-            appointment.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -167,21 +149,6 @@ public class AppointmentDAO {
             ps.setInt(11, appointment.getAppointmentID());
 
             ps.execute();
-
-            sqlStatement = "SELECT * FROM appointments WHERE Appointment_ID = ?";
-
-            DbQuery.setPreparedStatement(conn, sqlStatement);
-
-            ps = DbQuery.getPreparedStatement();
-
-            ps.setInt(1, appointment.getAppointmentID());
-
-            ps.execute();
-
-            ResultSet rs = ps.getResultSet();
-            rs.next();
-
-            appointment.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());

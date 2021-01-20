@@ -28,10 +28,6 @@ public class ContactDAO {
             ps.setString(2, contact.getEmail());
 
             ps.execute();
-
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-            contact.setContactID(rs.getInt(1));
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());

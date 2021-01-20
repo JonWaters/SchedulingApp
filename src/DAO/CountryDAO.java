@@ -27,26 +27,6 @@ public class CountryDAO {
             ps.setString(3, country.getLastUpdatedBy());
 
             ps.execute();
-
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-            country.setCountryID(rs.getInt(1));
-
-            sqlStatement = "SELECT * FROM countries WHERE Country_ID = ?";
-
-            DbQuery.setPreparedStatement(conn, sqlStatement);
-
-            ps = DbQuery.getPreparedStatement();
-
-            ps.setInt(1, country.getCountryID());
-
-            ps.execute();
-
-            rs = ps.getResultSet();
-            rs.next();
-
-            country.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
-            country.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
@@ -138,21 +118,6 @@ public class CountryDAO {
             ps.setInt(3, country.getCountryID());
 
             ps.execute();
-
-            sqlStatement = "SELECT * FROM countries WHERE Country_ID = ?";
-
-            DbQuery.setPreparedStatement(conn, sqlStatement);
-
-            ps = DbQuery.getPreparedStatement();
-
-            ps.setInt(1, country.getCountryID());
-
-            ps.execute();
-
-            ResultSet rs = ps.getResultSet();
-            rs.next();
-
-            country.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
