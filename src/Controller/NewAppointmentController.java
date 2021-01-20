@@ -197,6 +197,33 @@ public class NewAppointmentController implements Initializable {
         return endDateTime;
     }
 
+    private boolean fieldsNull(Appointment appointment) {
+
+        boolean fieldsNull = false;
+
+        if (appointment.getTitle() == null) {
+            fieldsNull = true;
+        } else if (appointment.getDescription() == null) {
+            fieldsNull = true;
+        } else if (appointment.getLocation() == null) {
+            fieldsNull = true;
+        } else if (appointment.getType() == null) {
+            fieldsNull = true;
+        } else if (appointment.getStartTime() == null) {
+            fieldsNull = true;
+        } else if (appointment.getEndTime() == null) {
+            fieldsNull = true;
+        } else if (appointment.getContactID() <= 0) {
+            fieldsNull = true;
+        } else if (appointment.getCustomerID() <= 0) {
+            fieldsNull = true;
+        } else if (appointment.getUserID() <= 0) {
+            fieldsNull = true;
+        }
+
+        return fieldsNull;
+    }
+
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
         {
             setConverter(new LocalTimeStringConverter(timeFormat,null));
