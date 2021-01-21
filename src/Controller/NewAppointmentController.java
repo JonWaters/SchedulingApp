@@ -106,25 +106,34 @@ public class NewAppointmentController implements Initializable {
     @FXML
     void saveButtonAction(ActionEvent event) throws IOException {
 
-        String title = titleText.getText();
-        String description = descriptionText.getText();
-        String location = locationText.getText();
-        String type = typeText.getText();
-        LocalDateTime startTime = getStartDateTime();
-        LocalDateTime endTime = getEndDateTime();
-        String createdBy = currentUser.getUserName();
-        String lastUpdatedBy = currentUser.getUserName();
-        int customerID = selectedCustomer.getCustomerID();
-        int userID = selectedUser.getUserID();
-        int contactID = contactComboBox.getSelectionModel().getSelectedItem().getContactID();
+        try {
+            String title = titleText.getText();
+            String description = descriptionText.getText();
+            String location = locationText.getText();
+            String type = typeText.getText();
+            LocalDateTime startTime = getStartDateTime();
+            LocalDateTime endTime = getEndDateTime();
+            String createdBy = currentUser.getUserName();
+            String lastUpdatedBy = currentUser.getUserName();
+            int customerID = selectedCustomer.getCustomerID();
+            int userID = selectedUser.getUserID();
+            int contactID = contactComboBox.getSelectionModel().getSelectedItem().getContactID();
 
-        Appointment newAppointment = new Appointment(title, description, location, type,
-                startTime, endTime, createdBy, lastUpdatedBy, customerID, userID, contactID);
 
+            Appointment newAppointment = new Appointment(title, description, location, type,
+                    startTime, endTime, createdBy, lastUpdatedBy, customerID, userID, contactID);
+
+            overlappingAppointment(newAppointment);
+        }
+        catch(Exception e) {
+            System.out.println("One or more fields is empty or not selected");
+        }
+
+        /*
         if (outsideBusinessHours(newAppointment)) {
             System.out.println("Outside business hours");
         }
-        /*
+
         try {
             AppointmentDAO.create(newAppointment);
         }
@@ -166,7 +175,7 @@ public class NewAppointmentController implements Initializable {
 
         startSVF.setValue(LocalTime.of(8, 00));
         startTimeSpinner.setValueFactory(startSVF);
-        endSVF.setValue(LocalTime.of(17, 00));
+        endSVF.setValue(LocalTime.of(22, 00));
         endTimeSpinner.setValueFactory(endSVF);
 
         try {
@@ -275,6 +284,40 @@ public class NewAppointmentController implements Initializable {
         }
 
         return outsideBusinessHours;
+    }
+
+    private void overlappingAppointment(Appointment newAppointment) throws SQLException {
+
+        ObservableList<Appointment> allAppointments = AppointmentDAO.selectAll();
+
+        boolean overlapping = false;
+
+        for (Appointment appointment : allAppointments) {
+
+            int newApptCustID = newAppointment.getCustomerID();
+            LocalDateTime newApptStart = newAppointment.getStartTime();
+            LocalDateTime newApptEnd = newAppointment.getEndTime();
+
+            int apptCustID = appointment.getCustomerID();
+            LocalDateTime apptStart = appointment.getStartTime();
+            LocalDateTime apptEnd = appointment.getEndTime();
+
+            if (newApptCustID == apptCustID && newApptStart.isAfter(apptStart) &&
+                newApptStart.isBefore(apptEnd)) {
+                overlapping = true;
+                break;
+            } else if (newApptCustID == apptCustID && newApptEnd.isAfter(apptStart) &&
+                        newApptEnd.isBefore(apptEnd)) {
+                overlapping = true;
+                break;
+            }
+        }
+
+        if (overlapping) {
+            System.out.println("Appointments overlap");
+        }
+
+        //return overlapping;
     }
 
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
