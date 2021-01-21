@@ -24,11 +24,10 @@ import javafx.util.converter.LocalTimeStringConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class NewAppointmentController implements Initializable {
 
@@ -122,6 +121,10 @@ public class NewAppointmentController implements Initializable {
         Appointment newAppointment = new Appointment(title, description, location, type,
                 startTime, endTime, createdBy, lastUpdatedBy, customerID, userID, contactID);
 
+        if (outsideBusinessHours(newAppointment)) {
+            System.out.println("Outside business hours");
+        }
+        /*
         try {
             AppointmentDAO.create(newAppointment);
         }
@@ -129,6 +132,8 @@ public class NewAppointmentController implements Initializable {
             System.out.println(e.getMessage());
         }
 
+
+         */
         Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -197,31 +202,31 @@ public class NewAppointmentController implements Initializable {
         return endDateTime;
     }
 
-    private boolean fieldsNull(Appointment appointment) {
+    private boolean fieldsEmpty(Appointment appointment) {
 
-        boolean fieldsNull = false;
+        boolean fieldsEmpty = false;
 
         if (appointment.getTitle() == null) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         } else if (appointment.getDescription() == null) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         } else if (appointment.getLocation() == null) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         } else if (appointment.getType() == null) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         } else if (appointment.getStartTime() == null) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         } else if (appointment.getEndTime() == null) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         } else if (appointment.getContactID() <= 0) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         } else if (appointment.getCustomerID() <= 0) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         } else if (appointment.getUserID() <= 0) {
-            fieldsNull = true;
+            fieldsEmpty = true;
         }
 
-        return fieldsNull;
+        return fieldsEmpty;
     }
 
     private boolean startAfterEnd(Appointment appointment) {
@@ -236,7 +241,41 @@ public class NewAppointmentController implements Initializable {
 
         return startAfterEnd;
     }
-    
+
+    private boolean outsideBusinessHours(Appointment appointment) {
+
+        //Build zoned appointment start and rezone as eastern time.
+        LocalDateTime startDateTime = appointment.getStartTime();
+        LocalDate startDate = startDateTime.toLocalDate();
+        ZonedDateTime startTimeZoned = startDateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime startTimeAsEST = startTimeZoned.withZoneSameInstant(ZoneId.of("America/New_York"));
+
+        //Build zoned business start time and zone as eastern time.
+        LocalTime businessStartTime = LocalTime.parse("08:00:00");
+        LocalDateTime businessStartDateTime = LocalDateTime.of(startDate, businessStartTime);
+        ZonedDateTime businessStartTimeZoned = businessStartDateTime.atZone(ZoneId.of("America/New_York"));
+
+        //Build zoned appointment end and rezone as eastern time.
+        LocalDateTime endDateTime = appointment.getEndTime();
+        ZonedDateTime endTimeZoned = endDateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime endTimeAsEST = endTimeZoned.withZoneSameInstant(ZoneId.of("America/New_York"));
+
+        //Build zoned business end time and zone as eastern time.
+        //startDate is reused for business end because appointment cannot span multiple days.
+        LocalTime businessEndTime = LocalTime.parse("22:00:00");
+        LocalDateTime businessEndDateTime = LocalDateTime.of(startDate, businessEndTime);
+        ZonedDateTime businessEndTimeZoned = businessEndDateTime.atZone(ZoneId.of("America/New_York"));
+
+        boolean outsideBusinessHours = false;
+
+        if (startTimeAsEST.isBefore(businessStartTimeZoned) ||
+                endTimeAsEST.isAfter(businessEndTimeZoned)) {
+
+            outsideBusinessHours = true;
+        }
+
+        return outsideBusinessHours;
+    }
 
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
         {

@@ -21,7 +21,7 @@ public class Main extends Application {
 
     public static Connection conn = null;
 
-    public static TimeZone timeZone = TimeZone.getDefault();
+    public static TimeZone userTimeZone = TimeZone.getDefault();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -31,9 +31,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static TimeZone getTimeZone() {
+    public static TimeZone getUserTimeZone() {
 
-        return timeZone;
+        return userTimeZone;
     }
 
 

@@ -31,7 +31,7 @@ public class LoginController implements Initializable {
 
     ResourceBundle rb = ResourceBundle.getBundle("Lang/rb", userLocale);
 
-    private TimeZone timeZone = Main.getTimeZone();
+    private TimeZone userTimeZone = Main.getUserTimeZone();
 
     public static User currentUser;
 
@@ -114,7 +114,7 @@ public class LoginController implements Initializable {
 
     private void setTimeZoneLabel() {
 
-        zoneIdLabel.setText(timeZone.getID());
+        zoneIdLabel.setText(userTimeZone.getID());
     }
 
     public static User getCurrentUser() {
