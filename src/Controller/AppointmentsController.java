@@ -21,7 +21,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
@@ -156,10 +158,31 @@ public class AppointmentsController implements Initializable {
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
         try {
-            displayAppointmentsByWeek();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            displayAllAppointments();
         }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void displayAllAppointments() throws SQLException {
+
+        try {
+            ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
+            ObservableList<AppointmentDisplay> appointments = FXCollections.observableArrayList();
+
+            for (Appointment appointment : dbAppointments) {
+
+                AppointmentDisplay newAppointment = new AppointmentDisplay(appointment);
+                appointments.add(newAppointment);
+            }
+
+            appointmentsTable.setItems(appointments);
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private void displayAppointmentsByWeek() throws SQLException {
@@ -168,13 +191,42 @@ public class AppointmentsController implements Initializable {
             ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
             ObservableList<AppointmentDisplay> appointments = FXCollections.observableArrayList();
 
-            LocalDateTime today = LocalDateTime.now();
-            LocalDateTime oneWeek = today.plusDays(6);
+            LocalDate todayDate = LocalDate.now();
+            LocalTime midnight = LocalTime.MIDNIGHT;
+            LocalDateTime todayMidnight = LocalDateTime.of(todayDate, midnight);
+            LocalDateTime oneWeek = todayMidnight.plusWeeks(1);
 
             for (Appointment appointment : dbAppointments) {
 
-                if (appointment.getStartTime().isAfter(today) &&
+                if (appointment.getStartTime().isAfter(todayMidnight) &&
                         appointment.getStartTime().isBefore(oneWeek)) {
+                    AppointmentDisplay newAppointment = new AppointmentDisplay(appointment);
+                    appointments.add(newAppointment);
+                }
+            }
+
+            appointmentsTable.setItems(appointments);
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void displayAppointmentsByMonth() throws SQLException {
+
+        try {
+            ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
+            ObservableList<AppointmentDisplay> appointments = FXCollections.observableArrayList();
+
+            LocalDate todayDate = LocalDate.now();
+            LocalTime midnight = LocalTime.MIDNIGHT;
+            LocalDateTime todayMidnight = LocalDateTime.of(todayDate, midnight);
+            LocalDateTime oneMonth = todayMidnight.plusMonths(1);
+
+            for (Appointment appointment : dbAppointments) {
+
+                if (appointment.getStartTime().isAfter(todayMidnight) &&
+                        appointment.getStartTime().isBefore(oneMonth)) {
                     AppointmentDisplay newAppointment = new AppointmentDisplay(appointment);
                     appointments.add(newAppointment);
                 }
