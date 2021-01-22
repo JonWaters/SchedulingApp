@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
@@ -98,6 +99,62 @@ public class AppointmentsController implements Initializable {
     @FXML
     void deleteAppointmentButtonAction(ActionEvent event) {
 
+        selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
+
+        if (selectedAppointment == null) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Error");
+            alert.setHeaderText("You must select an appointment from the list.");
+            alert.showAndWait();
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Alert");
+            alert.setContentText("Are you sure you want to delete the selected appointment?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+
+                try {
+                    AppointmentDAO.deleteByID(selectedAppointment.getAppointmentID());
+                }
+                catch(SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+
+                Alert info = new Alert(Alert.AlertType.INFORMATION);
+
+                info.setTitle("Information");
+                info.setHeaderText("Appointment ID " + selectedAppointment.getAppointmentID() +
+                        " of type " + selectedAppointment.getType() + " has been cancelled.");
+                info.showAndWait();
+
+                if (allRadioButton.isSelected()) {
+                    try {
+                        displayAllAppointments();
+                    }
+                    catch(SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (weekRadioButton.isSelected()) {
+                    try {
+                        displayAppointmentsByWeek();
+                    }
+                    catch(SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (monthRadioButton.isSelected()) {
+                    try {
+                        displayAppointmentsByMonth();
+                    }
+                    catch(SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        }
     }
 
     @FXML
