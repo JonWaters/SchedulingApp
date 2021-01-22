@@ -27,37 +27,37 @@ import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
 
-    private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
+    private static Appointment selectedAppointment;
 
     @FXML
-    private TableView<AppointmentDisplay> appointmentsTable;
+    private TableView<Appointment> appointmentsTable;
 
     @FXML
-    private TableColumn<AppointmentDisplay, Integer> idColumn;
+    private TableColumn<Appointment, Integer> idColumn;
 
     @FXML
-    private TableColumn<AppointmentDisplay, String> titleColumn;
+    private TableColumn<Appointment, String> titleColumn;
 
     @FXML
-    private TableColumn<AppointmentDisplay, String> descriptionColumn;
+    private TableColumn<Appointment, String> descriptionColumn;
 
     @FXML
-    private TableColumn<AppointmentDisplay, String> locationColumn;
+    private TableColumn<Appointment, String> locationColumn;
 
     @FXML
-    private TableColumn<AppointmentDisplay, String> contactColumn;
+    private TableColumn<Appointment, String> contactColumn;
 
     @FXML
-    private TableColumn<AppointmentDisplay, String> typeColumn;
+    private TableColumn<Appointment, String> typeColumn;
 
     @FXML
-    private TableColumn<AppointmentDisplay, String> startColumn;
+    private TableColumn<Appointment, String> startColumn;
 
     @FXML
-    private TableColumn<AppointmentDisplay, String> endColumn;
+    private TableColumn<Appointment, String> endColumn;
 
     @FXML
-    private TableColumn<AppointmentDisplay, Integer> customerIdColumn;
+    private TableColumn<Appointment, Integer> customerIdColumn;
 
     @FXML
     private RadioButton weekRadioButton;
@@ -109,11 +109,22 @@ public class AppointmentsController implements Initializable {
     @FXML
     void modifyAppointmentButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/ModifyAppointment.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
+
+        if (selectedAppointment == null) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Error");
+            alert.setHeaderText("You must select an appointment from the list.");
+            alert.showAndWait();
+        } else {
+            Parent parent = FXMLLoader.load(getClass().getResource("../View/ModifyAppointment.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     @FXML
@@ -193,7 +204,7 @@ public class AppointmentsController implements Initializable {
 
         try {
             ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
-            ObservableList<AppointmentDisplay> appointments = FXCollections.observableArrayList();
+            ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
             for (Appointment appointment : dbAppointments) {
 
@@ -213,7 +224,7 @@ public class AppointmentsController implements Initializable {
 
         try {
             ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
-            ObservableList<AppointmentDisplay> appointments = FXCollections.observableArrayList();
+            ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
             LocalDate todayDate = LocalDate.now();
             LocalTime midnight = LocalTime.MIDNIGHT;
@@ -240,7 +251,7 @@ public class AppointmentsController implements Initializable {
 
         try {
             ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
-            ObservableList<AppointmentDisplay> appointments = FXCollections.observableArrayList();
+            ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
             LocalDate todayDate = LocalDate.now();
             LocalTime midnight = LocalTime.MIDNIGHT;
@@ -261,5 +272,9 @@ public class AppointmentsController implements Initializable {
         catch(SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static Appointment getSelectedAppointment() {
+        return selectedAppointment;
     }
 }
