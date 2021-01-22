@@ -26,6 +26,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -91,11 +92,19 @@ public class NewAppointmentController implements Initializable {
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Alert");
+        alert.setContentText("Do you want cancel changes and return to the Appointments screen?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+
+            Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     @FXML
@@ -127,8 +136,8 @@ public class NewAppointmentController implements Initializable {
 
             if (!fieldsEmpty(newAppointment) &&
                     !startAfterEnd(newAppointment) &&
-                    !overlappingAppointment(newAppointment) &&
-                    !outsideBusinessHours(newAppointment)) {
+                    !outsideBusinessHours(newAppointment) &&
+                    !overlappingAppointment(newAppointment)) {
 
                 AppointmentDAO.create(newAppointment);
 
