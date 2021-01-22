@@ -1,9 +1,12 @@
 package Controller;
 
+import DAO.AppointmentDAO;
 import DAO.UserDAO;
 import Main.Main;
+import Model.Appointment;
 import Model.User;
 import Utils.UserLog;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +23,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.EventObject;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -34,6 +39,8 @@ public class LoginController implements Initializable {
     private TimeZone userTimeZone = Main.getUserTimeZone();
 
     public static User currentUser;
+
+    private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
 
     @FXML
     private Label userNameLabel;
@@ -72,6 +79,7 @@ public class LoginController implements Initializable {
 
             UserLog.writeLog(1);
             openAppointmentsScreen(event);
+            appointmentReminder();
         } else {
 
             UserLog.writeLog(0);
@@ -133,7 +141,7 @@ public class LoginController implements Initializable {
             currentUser = UserDAO.selectByName(userName);
 
             if (currentUser.getPassword() == null) {
-
+                //Do nothing
             } else if (currentUser.getPassword().equals(password)) {
 
                 isValid = true;
@@ -152,5 +160,49 @@ public class LoginController implements Initializable {
         alert.setTitle(rb.getString("error"));
         alert.setHeaderText(rb.getString("errorText"));
         alert.showAndWait();
+    }
+
+    private void appointmentReminder() throws SQLException {
+
+
+
+        try {
+            boolean upcomingAppointment = false;
+            ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
+            LocalDateTime now = LocalDateTime.now();
+            int currentUserID = currentUser.getUserID();
+
+            for (Appointment appointment : dbAppointments) {
+
+                LocalDateTime startTime = appointment.getStartTime();
+
+                if ((appointment.getUserID() == currentUserID) &&
+                        startTime.isAfter(now) &&
+                        startTime.isBefore(now.plusMinutes(15))) {
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+                    alert.setTitle("Information");
+                    alert.setHeaderText("Appointment ID " + appointment.getAppointmentID() +
+                            " is starting at " + startTime.format(dateTimeFormat) + ".");
+                    alert.showAndWait();
+
+                    upcomingAppointment = true;
+                    break;
+                }
+            }
+
+            if (!upcomingAppointment) {
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+                alert.setTitle("Information");
+                alert.setHeaderText("There are no appointments starting in the next 15 minutes.");
+                alert.showAndWait();
+            }
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
