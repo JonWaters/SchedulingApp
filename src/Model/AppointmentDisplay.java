@@ -37,10 +37,10 @@ public class AppointmentDisplay extends Appointment {
             System.out.println(e.getMessage());
         }
 
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
 
-        this.startTimeString = appointment.getStartTime().format(timeFormat);
-        this.endTimeString = appointment.getEndTime().format(timeFormat);
+        this.startTimeString = appointment.getStartTime().format(dateTimeFormat);
+        this.endTimeString = appointment.getEndTime().format(dateTimeFormat);
 
     }
 
