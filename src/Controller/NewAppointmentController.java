@@ -327,16 +327,34 @@ public class NewAppointmentController implements Initializable {
 
             overlappingAppointment = appointment;
 
+                //If new appointment starts in the middle of other appointment
             if ((newApptCustID == apptCustID) && newApptStart.isAfter(apptStart) &&
                 newApptStart.isBefore(apptEnd)) {
                 overlapping = true;
                 break;
+                //If new appointment ends in the middle of other appointment
             } else if ((newApptCustID == apptCustID) && newApptEnd.isAfter(apptStart) &&
                         newApptEnd.isBefore(apptEnd)) {
                 overlapping = true;
                 break;
+                //If new appointment spans other appointment
             } else if ((newApptCustID == apptCustID) && newApptStart.isBefore(apptStart) &&
                         newApptEnd.isAfter(apptEnd)) {
+                overlapping = true;
+                break;
+                //If new appointment starts at same time and ends after other appointment
+            } else if ((newApptCustID == apptCustID) && newApptStart.isEqual(apptStart) &&
+                    newApptEnd.isAfter(apptEnd)) {
+                overlapping = true;
+                break;
+                //If new starts before and ends at same time as other appointment
+            } else if ((newApptCustID == apptCustID) && newApptStart.isBefore(apptStart) &&
+                    newApptEnd.isEqual(apptEnd)) {
+                overlapping = true;
+                break;
+                //If new appointment starts and ends at same time as other appointment
+            } else if ((newApptCustID == apptCustID) && newApptStart.isEqual(apptStart) &&
+                    newApptEnd.isEqual(apptEnd)) {
                 overlapping = true;
                 break;
             }
