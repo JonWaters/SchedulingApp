@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -62,6 +63,9 @@ public class AppointmentsController implements Initializable {
     private RadioButton weekRadioButton;
 
     @FXML
+    private ToggleGroup radioButtons;
+
+    @FXML
     private RadioButton monthRadioButton;
 
     @FXML
@@ -73,6 +77,12 @@ public class AppointmentsController implements Initializable {
     @FXML
     void allRadioButtonAction(ActionEvent event) {
 
+        try {
+            displayAllAppointments();
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
@@ -109,6 +119,12 @@ public class AppointmentsController implements Initializable {
     @FXML
     void monthRadioButtonAction(ActionEvent event) {
 
+        try {
+            displayAppointmentsByMonth();
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
@@ -134,6 +150,12 @@ public class AppointmentsController implements Initializable {
     @FXML
     void weekRadioButtonAction(ActionEvent event) {
 
+        try {
+            displayAppointmentsByWeek();
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -163,6 +185,8 @@ public class AppointmentsController implements Initializable {
         catch(SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        allRadioButton.setSelected(true);
     }
 
     private void displayAllAppointments() throws SQLException {

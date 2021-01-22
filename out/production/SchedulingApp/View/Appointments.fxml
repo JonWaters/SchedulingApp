@@ -5,6 +5,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -34,8 +35,11 @@
       <Button layoutX="752.0" layoutY="300.0" mnemonicParsing="false" onAction="#customersButtonAction" prefHeight="29.0" prefWidth="130.0" text="Customers" />
       <Button layoutX="752.0" layoutY="344.0" mnemonicParsing="false" onAction="#reportsButtonAction" prefHeight="27.0" prefWidth="130.0" text="Reports" />
       <Button layoutX="829.0" layoutY="550.0" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="27.0" prefWidth="53.0" text="Exit" />
-      <RadioButton fx:id="weekRadioButton" layoutX="103.0" layoutY="142.0" mnemonicParsing="false" onAction="#weekRadioButtonAction" text="Week" />
-      <RadioButton fx:id="monthRadioButton" layoutX="171.0" layoutY="142.0" mnemonicParsing="false" onAction="#monthRadioButtonAction" text="Month" />
-      <RadioButton fx:id="allRadioButton" layoutX="48.0" layoutY="142.0" mnemonicParsing="false" onAction="#allRadioButtonAction" text="All" />
+      <RadioButton fx:id="weekRadioButton" layoutX="103.0" layoutY="142.0" mnemonicParsing="false" onAction="#weekRadioButtonAction" text="Week">
+         <toggleGroup>
+            <ToggleGroup fx:id="radioButtons" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="monthRadioButton" layoutX="171.0" layoutY="142.0" mnemonicParsing="false" onAction="#monthRadioButtonAction" text="Month" toggleGroup="$radioButtons" />
+      <RadioButton fx:id="allRadioButton" layoutX="48.0" layoutY="142.0" mnemonicParsing="false" onAction="#allRadioButtonAction" text="All" toggleGroup="$radioButtons" />
    </children>
 </AnchorPane>
