@@ -286,7 +286,7 @@ public class NewAppointmentController implements Initializable {
         return outsideBusinessHours;
     }
 
-    private void overlappingAppointment(Appointment newAppointment) throws SQLException {
+    private boolean overlappingAppointment(Appointment newAppointment) throws SQLException {
 
         ObservableList<Appointment> allAppointments = AppointmentDAO.selectAll();
 
@@ -302,12 +302,16 @@ public class NewAppointmentController implements Initializable {
             LocalDateTime apptStart = appointment.getStartTime();
             LocalDateTime apptEnd = appointment.getEndTime();
 
-            if (newApptCustID == apptCustID && newApptStart.isAfter(apptStart) &&
+            if ((newApptCustID == apptCustID) && newApptStart.isAfter(apptStart) &&
                 newApptStart.isBefore(apptEnd)) {
                 overlapping = true;
                 break;
-            } else if (newApptCustID == apptCustID && newApptEnd.isAfter(apptStart) &&
+            } else if ((newApptCustID == apptCustID) && newApptEnd.isAfter(apptStart) &&
                         newApptEnd.isBefore(apptEnd)) {
+                overlapping = true;
+                break;
+            } else if ((newApptCustID == apptCustID) && newApptStart.isBefore(apptStart) &&
+                        newApptEnd.isAfter(apptEnd)) {
                 overlapping = true;
                 break;
             }
@@ -317,7 +321,7 @@ public class NewAppointmentController implements Initializable {
             System.out.println("Appointments overlap");
         }
 
-        //return overlapping;
+        return overlapping;
     }
 
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
