@@ -62,7 +62,15 @@ public class AppointmentsController implements Initializable {
     @FXML
     private RadioButton monthRadioButton;
 
+    @FXML
+    private RadioButton allRadioButton;
+
     public AppointmentsController() {
+    }
+
+    @FXML
+    void allRadioButtonAction(ActionEvent event) {
+
     }
 
     @FXML
