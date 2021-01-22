@@ -33,6 +33,8 @@ public class NewAppointmentController implements Initializable {
 
     private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
+    private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
+
     private User currentUser = LoginController.getCurrentUser();
 
     private ObservableList<Contact> contactList = FXCollections.observableArrayList();
@@ -123,31 +125,32 @@ public class NewAppointmentController implements Initializable {
             Appointment newAppointment = new Appointment(title, description, location, type,
                     startTime, endTime, createdBy, lastUpdatedBy, customerID, userID, contactID);
 
-            overlappingAppointment(newAppointment);
-        }
-        catch(Exception e) {
-            System.out.println("One or more fields is empty or not selected");
-        }
+            if (!fieldsEmpty(newAppointment) &&
+                    !startAfterEnd(newAppointment) &&
+                    !overlappingAppointment(newAppointment) &&
+                    !outsideBusinessHours(newAppointment)) {
 
-        /*
-        if (outsideBusinessHours(newAppointment)) {
-            System.out.println("Outside business hours");
-        }
+                AppointmentDAO.create(newAppointment);
 
-        try {
-            AppointmentDAO.create(newAppointment);
+                Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            }
+
+        }
+        catch(NullPointerException e) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Error");
+            alert.setHeaderText("One or more fields are not selected.");
+            alert.showAndWait();
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
         }
-
-
-         */
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
     }
 
     @FXML
@@ -215,24 +218,23 @@ public class NewAppointmentController implements Initializable {
 
         boolean fieldsEmpty = false;
 
-        if (appointment.getTitle() == null) {
+        if (appointment.getTitle().equals("")) {
             fieldsEmpty = true;
-        } else if (appointment.getDescription() == null) {
+        } else if (appointment.getDescription().equals("")) {
             fieldsEmpty = true;
-        } else if (appointment.getLocation() == null) {
+        } else if (appointment.getLocation().equals("")) {
             fieldsEmpty = true;
-        } else if (appointment.getType() == null) {
+        } else if (appointment.getType().equals("")) {
             fieldsEmpty = true;
-        } else if (appointment.getStartTime() == null) {
-            fieldsEmpty = true;
-        } else if (appointment.getEndTime() == null) {
-            fieldsEmpty = true;
-        } else if (appointment.getContactID() <= 0) {
-            fieldsEmpty = true;
-        } else if (appointment.getCustomerID() <= 0) {
-            fieldsEmpty = true;
-        } else if (appointment.getUserID() <= 0) {
-            fieldsEmpty = true;
+        }
+
+        if (fieldsEmpty) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Error");
+            alert.setHeaderText("One or more text fields are empty.");
+            alert.showAndWait();
         }
 
         return fieldsEmpty;
@@ -246,6 +248,15 @@ public class NewAppointmentController implements Initializable {
 
         if (startTime.isAfter(endTime)) {
             startAfterEnd = true;
+        }
+
+        if (startAfterEnd) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Error");
+            alert.setHeaderText("The start time cannot occur after the end time.");
+            alert.showAndWait();
         }
 
         return startAfterEnd;
@@ -283,6 +294,16 @@ public class NewAppointmentController implements Initializable {
             outsideBusinessHours = true;
         }
 
+        if (outsideBusinessHours) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Error");
+            alert.setHeaderText("The appointment you trying to create occurs outside of business hours.\n" +
+                                "Business hours are from 08:00 to 22:00 EST.");
+            alert.showAndWait();
+        }
+
         return outsideBusinessHours;
     }
 
@@ -291,6 +312,8 @@ public class NewAppointmentController implements Initializable {
         ObservableList<Appointment> allAppointments = AppointmentDAO.selectAll();
 
         boolean overlapping = false;
+
+        Appointment overlappingAppointment = new Appointment();
 
         for (Appointment appointment : allAppointments) {
 
@@ -301,6 +324,8 @@ public class NewAppointmentController implements Initializable {
             int apptCustID = appointment.getCustomerID();
             LocalDateTime apptStart = appointment.getStartTime();
             LocalDateTime apptEnd = appointment.getEndTime();
+
+            overlappingAppointment = appointment;
 
             if ((newApptCustID == apptCustID) && newApptStart.isAfter(apptStart) &&
                 newApptStart.isBefore(apptEnd)) {
@@ -318,7 +343,14 @@ public class NewAppointmentController implements Initializable {
         }
 
         if (overlapping) {
-            System.out.println("Appointments overlap");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Error");
+            alert.setHeaderText("The appointment you are trying to create overlaps with " +
+                    "another appointment starting at " + overlappingAppointment.getStartTime().format(dateTimeFormat) +
+                    " and ending at " + overlappingAppointment.getEndTime().format(dateTimeFormat) + ".");
+            alert.showAndWait();
         }
 
         return overlapping;
