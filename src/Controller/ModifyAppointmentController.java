@@ -128,7 +128,7 @@ public class ModifyAppointmentController implements Initializable {
             String type = typeText.getText();
             LocalDateTime startTime = getStartDateTime();
             LocalDateTime endTime = getEndDateTime();
-            String createdBy = currentUser.getUserName();
+            String createdBy = selectedAppointment.getCreatedBy();
             String lastUpdatedBy = currentUser.getUserName();
             int customerID = selectedCustomer.getCustomerID();
             int userID = selectedUser.getUserID();
@@ -138,12 +138,14 @@ public class ModifyAppointmentController implements Initializable {
             Appointment newAppointment = new Appointment(title, description, location, type,
                     startTime, endTime, createdBy, lastUpdatedBy, customerID, userID, contactID);
 
+            newAppointment.setAppointmentID(selectedAppointment.getAppointmentID());
+
             if (!VerifyAppt.fieldsEmpty(newAppointment) &&
                     !VerifyAppt.startAfterEnd(newAppointment) &&
                     !VerifyAppt.outsideBusinessHours(newAppointment) &&
                     !VerifyAppt.overlappingAppointment(newAppointment)) {
 
-                AppointmentDAO.create(newAppointment);
+                AppointmentDAO.update(newAppointment);
 
                 Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
                 Scene scene = new Scene(parent);
