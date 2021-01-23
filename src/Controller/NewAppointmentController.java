@@ -35,8 +35,6 @@ public class NewAppointmentController implements Initializable {
 
     private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
-    private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
-
     private User currentUser = LoginController.getCurrentUser();
 
     private ObservableList<Contact> contactList = FXCollections.observableArrayList();
@@ -223,7 +221,7 @@ public class NewAppointmentController implements Initializable {
 
         return endDateTime;
     }
-    
+
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
         {
             setConverter(new LocalTimeStringConverter(timeFormat,null));
