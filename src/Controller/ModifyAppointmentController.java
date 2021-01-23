@@ -8,6 +8,7 @@ import Model.Appointment;
 import Model.Contact;
 import Model.Customer;
 import Model.User;
+import Utils.VerifyAppt;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,8 +35,6 @@ public class ModifyAppointmentController implements Initializable {
 
     private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
-    private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
-
     private User currentUser = LoginController.getCurrentUser();
 
     private ObservableList<Contact> contactList = FXCollections.observableArrayList();
@@ -44,11 +43,16 @@ public class ModifyAppointmentController implements Initializable {
 
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
+    private Appointment selectedAppointment;
+
     private Contact selectedContact;
 
     private Customer selectedCustomer;
 
     private User selectedUser;
+
+    @FXML
+    private TextField appointmentIdText;
 
     @FXML
     private TextField titleText;
@@ -134,10 +138,10 @@ public class ModifyAppointmentController implements Initializable {
             Appointment newAppointment = new Appointment(title, description, location, type,
                     startTime, endTime, createdBy, lastUpdatedBy, customerID, userID, contactID);
 
-            if (!fieldsEmpty(newAppointment) &&
-                    !startAfterEnd(newAppointment) &&
-                    !outsideBusinessHours(newAppointment) &&
-                    !overlappingAppointment(newAppointment)) {
+            if (!VerifyAppt.fieldsEmpty(newAppointment) &&
+                    !VerifyAppt.startAfterEnd(newAppointment) &&
+                    !VerifyAppt.outsideBusinessHours(newAppointment) &&
+                    !VerifyAppt.overlappingAppointment(newAppointment)) {
 
                 AppointmentDAO.create(newAppointment);
 
@@ -180,25 +184,58 @@ public class ModifyAppointmentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        setDefaultValues();
+        setValues();
     }
 
-    private void setDefaultValues() {
+    private void setValues() {
 
-        startSVF.setValue(LocalTime.of(8, 00));
+        selectedAppointment = AppointmentsController.getSelectedAppointment();
+
+        //Set text fields
+        appointmentIdText.setText(String.valueOf(selectedAppointment.getAppointmentID()));
+        titleText.setText(selectedAppointment.getTitle());
+        descriptionText.setText(selectedAppointment.getDescription());
+        locationText.setText(selectedAppointment.getLocation());
+        typeText.setText(selectedAppointment.getType());
+
+        //Set start time spinner
+        LocalTime startTime = selectedAppointment.getStartTime().toLocalTime();
+        startSVF.setValue(startTime);
         startTimeSpinner.setValueFactory(startSVF);
-        endSVF.setValue(LocalTime.of(22, 00));
+
+        //Set end time spinner
+        LocalTime endTime = selectedAppointment.getEndTime().toLocalTime();
+        endSVF.setValue(endTime);
         endTimeSpinner.setValueFactory(endSVF);
 
+        //Set start date picker
+        LocalDate startDate = selectedAppointment.getStartTime().toLocalDate();
+        startDatePicker.setValue(startDate);
+
+        //Set end date picker
+        LocalDate endDate = selectedAppointment.getEndTime().toLocalDate();
+        endDatePicker.setValue(endDate);
+
         try {
+            //Set contact combo box
             contactList = ContactDAO.selectAll();
             contactComboBox.setItems(contactList);
+            selectedContact = ContactDAO.selectByID(selectedAppointment.getContactID());
+            contactComboBox.setValue(selectedContact);
 
+            //Set customer combo box
             customerList = CustomerDAO.selectAll();
             customerComboBox.setItems(customerList);
+            selectedCustomer = CustomerDAO.selectByID(selectedAppointment.getCustomerID());
+            customerComboBox.setValue(selectedCustomer);
+            customerIdText.setText(String.valueOf(selectedCustomer.getCustomerID()));
 
+            //Set user combo box
             userList = UserDAO.selectAll();
             userComboBox.setItems(userList);
+            selectedUser = UserDAO.selectByID(selectedAppointment.getUserID());
+            userComboBox.setValue(selectedUser);
+            userIdText.setText(String.valueOf(selectedUser.getUserID()));
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -221,166 +258,6 @@ public class ModifyAppointmentController implements Initializable {
         LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
 
         return endDateTime;
-    }
-
-    private boolean fieldsEmpty(Appointment appointment) {
-
-        boolean fieldsEmpty = false;
-
-        if (appointment.getTitle().equals("")) {
-            fieldsEmpty = true;
-        } else if (appointment.getDescription().equals("")) {
-            fieldsEmpty = true;
-        } else if (appointment.getLocation().equals("")) {
-            fieldsEmpty = true;
-        } else if (appointment.getType().equals("")) {
-            fieldsEmpty = true;
-        }
-
-        if (fieldsEmpty) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-
-            alert.setTitle("Error");
-            alert.setHeaderText("One or more text fields are empty.");
-            alert.showAndWait();
-        }
-
-        return fieldsEmpty;
-    }
-
-    private boolean startAfterEnd(Appointment appointment) {
-
-        boolean startAfterEnd = false;
-        LocalDateTime startTime = appointment.getStartTime();
-        LocalDateTime endTime = appointment.getEndTime();
-
-        if (startTime.isAfter(endTime)) {
-            startAfterEnd = true;
-        }
-
-        if (startAfterEnd) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-
-            alert.setTitle("Error");
-            alert.setHeaderText("The start time cannot occur after the end time.");
-            alert.showAndWait();
-        }
-
-        return startAfterEnd;
-    }
-
-    private boolean outsideBusinessHours(Appointment appointment) {
-
-        //Build zoned appointment start and rezone as eastern time.
-        LocalDateTime startDateTime = appointment.getStartTime();
-        LocalDate startDate = startDateTime.toLocalDate();
-        ZonedDateTime startTimeZoned = startDateTime.atZone(ZoneId.systemDefault());
-        ZonedDateTime startTimeAsEST = startTimeZoned.withZoneSameInstant(ZoneId.of("America/New_York"));
-
-        //Build zoned business start time and zone as eastern time.
-        LocalTime businessStartTime = LocalTime.parse("08:00:00");
-        LocalDateTime businessStartDateTime = LocalDateTime.of(startDate, businessStartTime);
-        ZonedDateTime businessStartTimeZoned = businessStartDateTime.atZone(ZoneId.of("America/New_York"));
-
-        //Build zoned appointment end and rezone as eastern time.
-        LocalDateTime endDateTime = appointment.getEndTime();
-        ZonedDateTime endTimeZoned = endDateTime.atZone(ZoneId.systemDefault());
-        ZonedDateTime endTimeAsEST = endTimeZoned.withZoneSameInstant(ZoneId.of("America/New_York"));
-
-        //Build zoned business end time and zone as eastern time.
-        //startDate is reused for business end because appointment cannot span multiple days.
-        LocalTime businessEndTime = LocalTime.parse("22:00:00");
-        LocalDateTime businessEndDateTime = LocalDateTime.of(startDate, businessEndTime);
-        ZonedDateTime businessEndTimeZoned = businessEndDateTime.atZone(ZoneId.of("America/New_York"));
-
-        boolean outsideBusinessHours = false;
-
-        if (startTimeAsEST.isBefore(businessStartTimeZoned) ||
-                endTimeAsEST.isAfter(businessEndTimeZoned)) {
-
-            outsideBusinessHours = true;
-        }
-
-        if (outsideBusinessHours) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-
-            alert.setTitle("Error");
-            alert.setHeaderText("The appointment you trying to create occurs outside of business hours.\n" +
-                    "Business hours are from 08:00 to 22:00 EST.");
-            alert.showAndWait();
-        }
-
-        return outsideBusinessHours;
-    }
-
-    private boolean overlappingAppointment(Appointment newAppointment) throws SQLException {
-
-        ObservableList<Appointment> allAppointments = AppointmentDAO.selectAll();
-
-        boolean overlapping = false;
-
-        Appointment overlappingAppointment = new Appointment();
-
-        for (Appointment appointment : allAppointments) {
-
-            int newApptCustID = newAppointment.getCustomerID();
-            LocalDateTime newApptStart = newAppointment.getStartTime();
-            LocalDateTime newApptEnd = newAppointment.getEndTime();
-
-            int apptCustID = appointment.getCustomerID();
-            LocalDateTime apptStart = appointment.getStartTime();
-            LocalDateTime apptEnd = appointment.getEndTime();
-
-            overlappingAppointment = appointment;
-
-            //If new appointment starts in the middle of other appointment
-            if ((newApptCustID == apptCustID) && newApptStart.isAfter(apptStart) &&
-                    newApptStart.isBefore(apptEnd)) {
-                overlapping = true;
-                break;
-                //If new appointment ends in the middle of other appointment
-            } else if ((newApptCustID == apptCustID) && newApptEnd.isAfter(apptStart) &&
-                    newApptEnd.isBefore(apptEnd)) {
-                overlapping = true;
-                break;
-                //If new appointment spans other appointment
-            } else if ((newApptCustID == apptCustID) && newApptStart.isBefore(apptStart) &&
-                    newApptEnd.isAfter(apptEnd)) {
-                overlapping = true;
-                break;
-                //If new appointment starts at same time and ends after other appointment
-            } else if ((newApptCustID == apptCustID) && newApptStart.isEqual(apptStart) &&
-                    newApptEnd.isAfter(apptEnd)) {
-                overlapping = true;
-                break;
-                //If new starts before and ends at same time as other appointment
-            } else if ((newApptCustID == apptCustID) && newApptStart.isBefore(apptStart) &&
-                    newApptEnd.isEqual(apptEnd)) {
-                overlapping = true;
-                break;
-                //If new appointment starts and ends at same time as other appointment
-            } else if ((newApptCustID == apptCustID) && newApptStart.isEqual(apptStart) &&
-                    newApptEnd.isEqual(apptEnd)) {
-                overlapping = true;
-                break;
-            }
-        }
-
-        if (overlapping) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-
-            alert.setTitle("Error");
-            alert.setHeaderText("The appointment you are trying to create overlaps with " +
-                    "another appointment starting at " + overlappingAppointment.getStartTime().format(dateTimeFormat) +
-                    " and ending at " + overlappingAppointment.getEndTime().format(dateTimeFormat) + ".");
-            alert.showAndWait();
-        }
-
-        return overlapping;
     }
 
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
