@@ -130,7 +130,7 @@ public class AppointmentDAO {
         try {
             String sqlStatement = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, " +
                     "Type = ?, Start = ?, End = ?, Last_update = NOW(), Last_Updated_By = ?, " +
-                    "Customer_ID = ?, User_ID = ?, Contact_ID = ?, WHERE Appointment_ID = ?";
+                    "Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
 
             DbQuery.setPreparedStatement(conn, sqlStatement);
 
