@@ -116,6 +116,12 @@ public class VerifyAppt {
 
         for (Appointment appointment : allAppointments) {
 
+            //Do not check newAppointment against itself.
+            //Needed during check of modified appointment.
+            if (appointment.getAppointmentID() == newAppointment.getAppointmentID()) {
+                continue;
+            }
+
             int newApptCustID = newAppointment.getCustomerID();
             LocalDateTime newApptStart = newAppointment.getStartTime();
             LocalDateTime newApptEnd = newAppointment.getEndTime();
