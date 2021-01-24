@@ -26,8 +26,6 @@ public class NewCustomerController implements Initializable {
 
     ObservableList<Country> countryList = FXCollections.observableArrayList();
 
-    ObservableList<Division> divisionList = FXCollections.observableArrayList();
-
     @FXML
     private TextField nameText;
 
