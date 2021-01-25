@@ -3,23 +3,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsController">
    <children>
       <Label layoutX="38.0" layoutY="55.0" text="Reports">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="829.0" layoutY="550.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="27.0" prefWidth="53.0" text="Back" />
-      <TextArea fx:id="reportsTextArea" layoutX="38.0" layoutY="125.0" prefHeight="350.0" prefWidth="700.0" />
-      <RadioButton fx:id="typeRadioButton" layoutX="38.0" layoutY="489.0" mnemonicParsing="false" text="Type" />
-      <RadioButton fx:id="monthRadioButton" layoutX="117.0" layoutY="489.0" mnemonicParsing="false" text="Month" />
-      <RadioButton fx:id="scheduleRadioButton" layoutX="201.0" layoutY="489.0" mnemonicParsing="false" text="Schedule" />
-      <RadioButton fx:id="locationRadioButton" layoutX="303.0" layoutY="489.0" mnemonicParsing="false" text="Location" />
-      <Button layoutX="703.0" layoutY="550.0" mnemonicParsing="false" onAction="#generateButtonAction" text="Generate Report" />
+      <Button layoutX="505.0" layoutY="550.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="27.0" prefWidth="53.0" text="Back" />
+      <RadioButton fx:id="typeRadioButton" layoutX="34.0" layoutY="143.0" mnemonicParsing="false" text="Type">
+         <toggleGroup>
+            <ToggleGroup fx:id="radioButtons" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="monthRadioButton" layoutX="34.0" layoutY="188.0" mnemonicParsing="false" text="Month" toggleGroup="$radioButtons" />
+      <RadioButton fx:id="scheduleRadioButton" layoutX="34.0" layoutY="232.0" mnemonicParsing="false" text="Schedule" toggleGroup="$radioButtons" />
+      <RadioButton fx:id="locationRadioButton" layoutX="36.0" layoutY="276.0" mnemonicParsing="false" text="Location" toggleGroup="$radioButtons" />
+      <Button layoutX="373.0" layoutY="550.0" mnemonicParsing="false" onAction="#generateButtonAction" text="Generate Report" />
    </children>
 </AnchorPane>

@@ -8,7 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,10 +18,10 @@ import java.util.ResourceBundle;
 public class ReportsController implements Initializable {
 
     @FXML
-    private TextArea reportsTextArea;
+    private RadioButton typeRadioButton;
 
     @FXML
-    private RadioButton typeRadioButton;
+    private ToggleGroup radioButtons;
 
     @FXML
     private RadioButton monthRadioButton;
