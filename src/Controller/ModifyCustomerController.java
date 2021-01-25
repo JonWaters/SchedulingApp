@@ -35,6 +35,11 @@ public class ModifyCustomerController implements Initializable {
 
     private User currentUser = LoginController.getCurrentUser();
 
+    private Customer selectedCustomer;
+
+    @FXML
+    private TextField customerIdText;
+
     @FXML
     private TextField nameText;
 
@@ -143,14 +148,43 @@ public class ModifyCustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        setDefaultValues();
+        setValues();
     }
 
-    private void setDefaultValues() {
+    private void setValues() {
+
+        selectedCustomer = CustomersController.getSelectedCustomer();
+
+        //Set text fields
+        customerIdText.setText(String.valueOf(selectedCustomer.getCustomerID()));
+        nameText.setText(selectedCustomer.getCustomerName());
+        addressText.setText(selectedCustomer.getAddress());
+        postalText.setText(selectedCustomer.getPostalCode());
+        phoneText.setText(selectedCustomer.getPhone());
 
         try {
+            //Get selected division then country
+            Division selectedDivision = DivisionDAO.selectByID(selectedCustomer.getDivisionID());
+            Country country = CountryDAO.selectByID(selectedDivision.getCountryID());
+
+            //Set country list
             countryList = CountryDAO.selectAll();
             countryComboBox.setItems(countryList);
+            countryComboBox.setValue(country);
+
+            //Set division list
+            ObservableList<Division> dbDivisions = DivisionDAO.selectAll();
+            ObservableList<Division> divisionByCountry = FXCollections.observableArrayList();
+
+            for (Division division : dbDivisions) {
+
+                if (division.getCountryID() == country.getCountryID()) {
+                    divisionByCountry.add(division);
+                }
+            }
+
+            divisionComboBox.setItems(divisionByCountry);
+            divisionComboBox.setValue(selectedDivision);
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
