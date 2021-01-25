@@ -92,6 +92,7 @@ public class ModifyCustomerController implements Initializable {
             }
 
             divisionComboBox.setItems(divisionByCountry);
+            divisionComboBox.setValue(null);
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -106,16 +107,18 @@ public class ModifyCustomerController implements Initializable {
             String address = addressText.getText();
             String postalCode = postalText.getText();
             String phone = phoneText.getText();
-            String createdBy = currentUser.getUserName();
+            String createdBy = selectedCustomer.getCreatedBy();
             String lastUpdatedBy = currentUser.getUserName();
             int divisionID = divisionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
 
             Customer newCustomer = new Customer(customerName, address, postalCode, phone, createdBy,
                     lastUpdatedBy, divisionID);
 
+            newCustomer.setCustomerID(selectedCustomer.getCustomerID());
+
             if (!VerifyCust.fieldsEmpty(newCustomer)) {
 
-                CustomerDAO.create(newCustomer);
+                CustomerDAO.update(newCustomer);
 
                 Parent parent = FXMLLoader.load(getClass().getResource("../View/Customers.fxml"));
                 Scene scene = new Scene(parent);
