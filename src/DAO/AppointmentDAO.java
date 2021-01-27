@@ -168,6 +168,49 @@ public class AppointmentDAO {
         return appointments;
     }
 
+    public static ObservableList<Appointment> selectAllOrderByLocation() throws SQLException {
+
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+
+        try {
+            String sqlStatement = "SELECT * FROM appointments ORDER BY Location, Start";
+
+            DbQuery.setPreparedStatement(conn, sqlStatement);
+
+            PreparedStatement ps = DbQuery.getPreparedStatement();
+
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            while (rs.next()) {
+
+                Appointment appointment = new Appointment();
+
+                appointment.setAppointmentID(rs.getInt("Appointment_ID"));
+                appointment.setTitle(rs.getString("Title"));
+                appointment.setDescription(rs.getString("Description"));
+                appointment.setLocation(rs.getString("Location"));
+                appointment.setType(rs.getString("Type"));
+                appointment.setStartTime(rs.getTimestamp("Start").toLocalDateTime());
+                appointment.setEndTime(rs.getTimestamp("End").toLocalDateTime());
+                appointment.setCreateDate(rs.getTimestamp("Create_Date").toLocalDateTime());
+                appointment.setCreatedBy(rs.getString("Created_By"));
+                appointment.setLastUpdateTime(rs.getTimestamp("Last_Update").toLocalDateTime());
+                appointment.setCustomerID(rs.getInt("Customer_ID"));
+                appointment.setUserID(rs.getInt("User_ID"));
+                appointment.setContactID(rs.getInt("Contact_ID"));
+
+                appointments.add(appointment);
+            }
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return appointments;
+    }
+
     public static void update(Appointment appointment) throws SQLException {
 
         try {
