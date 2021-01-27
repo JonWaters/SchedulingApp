@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MonthTypeReportController">
    <children>
-      <Label layoutX="38.0" layoutY="55.0" text="Month Report">
+      <Label layoutX="38.0" layoutY="55.0" text="Appointment Count by Month and Type">
          <font>
             <Font size="24.0" />
          </font>
@@ -17,8 +17,8 @@
       <TableView fx:id="reportTable" layoutX="38.0" layoutY="174.0" prefHeight="300.0" prefWidth="525.0">
         <columns>
           <TableColumn fx:id="yearColumn" prefWidth="67.0" text="Year" />
-          <TableColumn fx:id="monthColumn" prefWidth="66.0" text="Month" />
-            <TableColumn fx:id="typeColumn" prefWidth="317.0" text="Type" />
+          <TableColumn fx:id="monthColumn" prefWidth="127.0" text="Month" />
+            <TableColumn fx:id="typeColumn" prefWidth="256.0" text="Type" />
             <TableColumn fx:id="totalColumn" prefWidth="74.0" text="Total" />
         </columns>
       </TableView>

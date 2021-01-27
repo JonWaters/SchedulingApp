@@ -87,7 +87,7 @@ public class AppointmentDAO {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
         try {
-            String sqlStatement = "SELECT * FROM appointments";
+            String sqlStatement = "SELECT * FROM appointments ORDER BY start";
 
             DbQuery.setPreparedStatement(conn, sqlStatement);
 
