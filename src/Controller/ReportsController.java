@@ -45,16 +45,9 @@ public class ReportsController implements Initializable {
     @FXML
     void generateButtonAction(ActionEvent event) throws IOException {
 
-        if (typeRadioButton.isSelected()) {
+        if (monthRadioButton.isSelected()) {
 
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/TypeReport.fxml"));
-            Scene scene = new Scene(parent);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } else if (monthRadioButton.isSelected()) {
-
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/MonthReport.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../View/MonthTypeReport.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);

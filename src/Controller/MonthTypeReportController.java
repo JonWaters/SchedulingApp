@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,7 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
-public class MonthReportController implements Initializable {
+public class MonthTypeReportController implements Initializable {
 
     @FXML
     private TableView<?> reportTable;
@@ -28,6 +29,9 @@ public class MonthReportController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> monthColumn;
+
+    @FXML
+    private TableColumn<?, ?> typeColumn;
 
     @FXML
     private TableColumn<?, ?> totalColumn;
@@ -56,5 +60,12 @@ public class MonthReportController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    private void generateReport() {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        Month month = now.getMonth();
     }
 }

@@ -15,13 +15,12 @@
          </font>
       </Label>
       <Button layoutX="505.0" layoutY="550.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="27.0" prefWidth="53.0" text="Back" />
-      <RadioButton fx:id="typeRadioButton" layoutX="34.0" layoutY="143.0" mnemonicParsing="false" text="Type">
+      <RadioButton fx:id="monthRadioButton" layoutX="34.0" layoutY="126.0" mnemonicParsing="false" text="Appointment Count by Month and Type">
          <toggleGroup>
             <ToggleGroup fx:id="radioButtons" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="monthRadioButton" layoutX="34.0" layoutY="188.0" mnemonicParsing="false" text="Month" toggleGroup="$radioButtons" />
-      <RadioButton fx:id="scheduleRadioButton" layoutX="34.0" layoutY="232.0" mnemonicParsing="false" text="Schedule" toggleGroup="$radioButtons" />
-      <RadioButton fx:id="locationRadioButton" layoutX="36.0" layoutY="276.0" mnemonicParsing="false" text="Location" toggleGroup="$radioButtons" />
+      <RadioButton fx:id="scheduleRadioButton" layoutX="34.0" layoutY="169.0" mnemonicParsing="false" text="Contact Schedule" toggleGroup="$radioButtons" />
+      <RadioButton fx:id="locationRadioButton" layoutX="34.0" layoutY="211.0" mnemonicParsing="false" text="Appointments by Location" toggleGroup="$radioButtons" />
       <Button layoutX="373.0" layoutY="550.0" mnemonicParsing="false" onAction="#generateButtonAction" text="Generate Report" />
    </children>
 </AnchorPane>

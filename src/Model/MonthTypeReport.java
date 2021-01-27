@@ -1,19 +1,24 @@
 package Model;
 
-public class MonthReportDisplay {
+import java.time.Month;
+
+public class MonthTypeReport {
 
     private int year;
 
-    private String month;
+    private Month month;
+
+    private String type;
 
     private int total;
 
-    public MonthReportDisplay() {
+    public MonthTypeReport() {
     }
 
-    public MonthReportDisplay(int year, String month, int total) {
+    public MonthTypeReport(int year, Month month, String type, int total) {
         this.year = year;
         this.month = month;
+        this.type = type;
         this.total = total;
     }
 
@@ -25,12 +30,20 @@ public class MonthReportDisplay {
         this.year = year;
     }
 
-    public String getMonth() {
+    public Month getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(Month month) {
         this.month = month;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getTotal() {
