@@ -26,55 +26,113 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that provides control logic for the Appointments screen.
+ *
+ * @author Jonathan Waters
+ */
 public class AppointmentsController implements Initializable {
 
+    /**
+     * The appointment object selected in the appointments table.
+     */
     private static Appointment selectedAppointment;
 
+    /**
+     * The appointments table.
+     */
     @FXML
     private TableView<Appointment> appointmentsTable;
 
+    /**
+     * The appointment ID column.
+     */
     @FXML
     private TableColumn<Appointment, Integer> idColumn;
 
+    /**
+     * The Title column for the appointments table.
+     */
     @FXML
     private TableColumn<Appointment, String> titleColumn;
 
+    /**
+     * The Description column for the appointments table.
+     */
     @FXML
     private TableColumn<Appointment, String> descriptionColumn;
 
+    /**
+     * The Location column for the appointments table.
+     */
     @FXML
     private TableColumn<Appointment, String> locationColumn;
 
+    /**
+     * The Contact column for the appointments table.
+     */
     @FXML
     private TableColumn<Appointment, String> contactColumn;
 
+    /**
+     * The Type column for the appointments table.
+     */
     @FXML
     private TableColumn<Appointment, String> typeColumn;
 
+    /**
+     * The start time column for the appointments table.
+     */
     @FXML
     private TableColumn<Appointment, String> startColumn;
 
+    /**
+     * The end time column for the appointments table.
+     */
     @FXML
     private TableColumn<Appointment, String> endColumn;
 
+    /**
+     * The Customer ID column for the appointments table.
+     */
     @FXML
     private TableColumn<Appointment, Integer> customerIdColumn;
 
+    /**
+     * The Week radio button.
+     */
     @FXML
     private RadioButton weekRadioButton;
 
+    /**
+     * The toggle group for the radio buttons.
+     */
     @FXML
     private ToggleGroup radioButtons;
 
+    /**
+     * The Month radio button.
+     */
     @FXML
     private RadioButton monthRadioButton;
 
+    /**
+     * The All radio button.
+     */
     @FXML
     private RadioButton allRadioButton;
 
+    /**
+     * The constructor for the AppointmentsController class.
+     */
     public AppointmentsController() {
     }
 
+    /**
+     * Calls the displayAllAppointments() method.
+     *
+     * @param event All radio button action.
+     */
     @FXML
     void allRadioButtonAction(ActionEvent event) {
 
@@ -86,6 +144,12 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Loads CustomersController.
+     *
+     * @param event Cancel button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void customersButtonAction(ActionEvent event) throws IOException {
 
@@ -96,6 +160,13 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Displays confirmation message end deletes selected appointment.
+     *
+     * The appointment list is refreshed depending on the radio button selected.
+     *
+     * @param event Delete appointment button action.
+     */
     @FXML
     void deleteAppointmentButtonAction(ActionEvent event) {
 
@@ -157,12 +228,23 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Closes and terminates application.
+     *
+     * @param event Exit button action.
+     */
     @FXML
     void exitButtonAction(ActionEvent event) {
 
         System.exit(0);
     }
 
+    /**
+     * Loads ModifyAppointmentController.
+     *
+     * @param event Modify appointment button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void modifyAppointmentButtonAction(ActionEvent event) throws IOException {
 
@@ -184,6 +266,10 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Calls the displayAppointmentsByMonth() method.
+     * @param event Month radio button action.
+     */
     @FXML
     void monthRadioButtonAction(ActionEvent event) {
 
@@ -195,6 +281,12 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Loads NewAppointmentController.
+     *
+     * @param event New appointment button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void newAppointmentButtonAction(ActionEvent event) throws IOException {
 
@@ -205,6 +297,12 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Loads ReportsController.
+     *
+     * @param event Reports button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void reportsButtonAction(ActionEvent event) throws IOException {
 
@@ -215,6 +313,10 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Calls the displayAppointmentsByWeek() method.
+     * @param event Week radio button action.
+     */
     @FXML
     void weekRadioButtonAction(ActionEvent event) {
 
@@ -257,6 +359,11 @@ public class AppointmentsController implements Initializable {
         allRadioButton.setSelected(true);
     }
 
+    /**
+     * Sets the appointments table to show All appointments.
+     *
+     * @throws SQLException From AppointmentDAO.selectAll().
+     */
     private void displayAllAppointments() throws SQLException {
 
         try {
@@ -277,6 +384,12 @@ public class AppointmentsController implements Initializable {
 
     }
 
+    /**
+     * Sets the appointments table to show appointments with a start time in
+     * the next seven days.
+     *
+     * @throws SQLException From AppointmentDAO.selectAll().
+     */
     private void displayAppointmentsByWeek() throws SQLException {
 
         try {
@@ -304,6 +417,12 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Sets the appointments table to show appointments with a start time in the
+     * next thirty days.
+     *
+     * @throws SQLException From AppointmentDAO.selectAll().
+     */
     private void displayAppointmentsByMonth() throws SQLException {
 
         try {
@@ -331,6 +450,11 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Passes selected appointment object to other controllers.
+     *
+     * @return selectedAppointment object.
+     */
     public static Appointment getSelectedAppointment() {
         return selectedAppointment;
     }
