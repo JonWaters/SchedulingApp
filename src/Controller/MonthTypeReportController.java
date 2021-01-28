@@ -90,37 +90,22 @@ public class MonthTypeReportController implements Initializable {
             ObservableList<MonthTypeReport> reportList = FXCollections.observableArrayList();
 
             //Get unique years
-            for (Appointment appointment : dbAppointments) {
+            dbAppointments.forEach(appointment -> {
                 Integer year = appointment.getStartTime().getYear();
-
-                if (years.contains(year)) {
-                    continue;
-                } else {
-                    years.add(year);
-                }
-            }
+                if (!years.contains(year)) {years.add(year);}
+            });
 
             //Get unique months
-            for (Appointment appointment : dbAppointments) {
+            dbAppointments.forEach(appointment -> {
                 Month month = appointment.getStartTime().getMonth();
-
-                if (months.contains(month)) {
-                    continue;
-                } else {
-                    months.add(month);
-                }
-            }
+                if (!months.contains(month)) {months.add(month);}
+            });
 
             //Get unique types
-            for (Appointment appointment : dbAppointments) {
+            dbAppointments.forEach(appointment -> {
                 String type = appointment.getType();
-
-                if (types.contains(type)) {
-                    continue;
-                } else {
-                    types.add(type);
-                }
-            }
+                if (!types.contains(type)) {types.add(type);}
+            });
 
             Integer year;
             Month month;
@@ -141,7 +126,7 @@ public class MonthTypeReportController implements Initializable {
                         type = types.get(k);
                         typeCount = 0;
 
-                        //Loop through all appointments
+                        //Loop through appointments
                         for (int l = 0; l < dbAppointments.size(); l++) {
                             appointment = dbAppointments.get(l);
 

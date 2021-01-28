@@ -5,6 +5,7 @@ import DAO.CustomerDAO;
 import Model.Appointment;
 import Model.Customer;
 import Model.CustomerDisplay;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,22 +33,22 @@ public class CustomersController implements Initializable {
     private static Customer selectedCustomer;
 
     @FXML
-    private TableView<Customer> customersTable;
+    private TableView<CustomerDisplay> customersTable;
 
     @FXML
-    private TableColumn<Customer, String> nameColumn;
+    private TableColumn<CustomerDisplay, String> nameColumn;
 
     @FXML
-    private TableColumn<Customer, String> addressColumn;
+    private TableColumn<CustomerDisplay, String> addressColumn;
 
     @FXML
-    private TableColumn<Customer, String> postalColumn;
+    private TableColumn<CustomerDisplay, String> postalColumn;
 
     @FXML
-    private TableColumn<Customer, String> phoneColumn;
+    private TableColumn<CustomerDisplay, String> phoneColumn;
 
     @FXML
-    private TableColumn<Customer, String> divisionColumn;
+    private TableColumn<CustomerDisplay, String> divisionColumn;
 
     @FXML
     void backButtonAction(ActionEvent event) throws IOException {
@@ -149,12 +150,12 @@ public class CustomersController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        postalColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        divisionColumn.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+        //Use of Lambdas to set cell values
+        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
+        addressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress()));
+        postalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPostalCode()));
+        phoneColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPhone()));
+        divisionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDivisionName()));
 
         try {
             displayAllCustomers();
@@ -168,7 +169,7 @@ public class CustomersController implements Initializable {
 
         try {
             ObservableList<Customer> dbCustomers = CustomerDAO.selectAll();
-            ObservableList<Customer> customers = FXCollections.observableArrayList();
+            ObservableList<CustomerDisplay> customers = FXCollections.observableArrayList();
 
             for (Customer customer : dbCustomers) {
 
