@@ -27,19 +27,40 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/**
+ * Controller class that provides control logic for the Month Type Report screen. Contains method
+ * with example of Lambda use.
+ *
+ * @author Jonathan Waters
+ */
 public class MonthTypeReportController implements Initializable {
 
+    /**
+     * The date time format.
+     */
     private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
 
+    /**
+     * The report table.
+     */
     @FXML
     private TableView<MonthTypeReport> reportTable;
 
+    /**
+     * The year column for the report table.
+     */
     @FXML
     private TableColumn<MonthTypeReport, Integer> yearColumn;
 
+    /**
+     * The month column for the report table.
+     */
     @FXML
     private TableColumn<MonthTypeReport, Month> monthColumn;
 
+    /**
+     * The type column for the report table.
+     */
     @FXML
     private TableColumn<MonthTypeReport, String> typeColumn;
 
@@ -90,18 +111,21 @@ public class MonthTypeReportController implements Initializable {
             ObservableList<MonthTypeReport> reportList = FXCollections.observableArrayList();
 
             //Get unique years
+            //Example of lambda use
             dbAppointments.forEach(appointment -> {
                 Integer year = appointment.getStartTime().getYear();
                 if (!years.contains(year)) {years.add(year);}
             });
 
             //Get unique months
+            //Example of lambda use
             dbAppointments.forEach(appointment -> {
                 Month month = appointment.getStartTime().getMonth();
                 if (!months.contains(month)) {months.add(month);}
             });
 
             //Get unique types
+            //Example of lambda use
             dbAppointments.forEach(appointment -> {
                 String type = appointment.getType();
                 if (!types.contains(type)) {types.add(type);}

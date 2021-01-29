@@ -75,16 +75,30 @@ public class ModifyCustomerController implements Initializable {
     @FXML
     private TextField postalText;
 
-    
+    /**
+     * The customer phone number text field.
+     */
     @FXML
     private TextField phoneText;
 
+    /**
+     * The country combo box.
+     */
     @FXML
     private ComboBox<Country> countryComboBox;
 
+    /**
+     * The division combo box.
+     */
     @FXML
     private ComboBox<Division> divisionComboBox;
 
+    /**
+     * Displays confirmation message and loads CustomerController.
+     *
+     * @param event Cancel button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
 
@@ -103,6 +117,11 @@ public class ModifyCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Sets value for country combo box and filters division combo box based on country value.
+     *
+     * @param event Country combo box action.
+     */
     @FXML
     void countryComboBoxAction(ActionEvent event) {
 
@@ -126,6 +145,12 @@ public class ModifyCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Creates new customer object with database ID from selected customer and updates database.
+     *
+     * @param event Save button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void saveButtonAction(ActionEvent event) throws IOException {
 
@@ -181,6 +206,9 @@ public class ModifyCustomerController implements Initializable {
         setValues();
     }
 
+    /**
+     * Sets field values based on customer object selected in CustomersController.
+     */
     private void setValues() {
 
         selectedCustomer = CustomersController.getSelectedCustomer();
