@@ -31,63 +31,137 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+/**
+ * Controller class that provides the control logic for the New Appointment screen.
+ *
+ * @author Jonathan Waters
+ */
 public class NewAppointmentController implements Initializable {
 
+    /**
+     * The date time format.
+     */
     private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
+    /**
+     * The currently logged in user object from LoginController.
+     */
     private User currentUser = LoginController.getCurrentUser();
 
+    /**
+     * A list of contact objects for the contact combo box.
+     */
     private ObservableList<Contact> contactList = FXCollections.observableArrayList();
 
+    /**
+     * A list of customer objects for the customer combo box.
+     */
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
+    /**
+     * A list of user objects for the user combo box.
+     */
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
+    /**
+     * The contact object selected in the contact combo box.
+     */
     private Contact selectedContact;
 
+    /**
+     * The customer object selected in the customer combo box.
+     */
     private Customer selectedCustomer;
 
+    /**
+     * The user object selected in the user combo box.
+     */
     private User selectedUser;
 
+    /**
+     * The title text field.
+     */
     @FXML
     private TextField titleText;
 
+    /**
+     * The description text field.
+     */
     @FXML
     private TextField descriptionText;
 
+    /**
+     * The location text field.
+     */
     @FXML
     private TextField locationText;
 
+    /**
+     * The type text field
+     */
     @FXML
     private TextField typeText;
 
+    /**
+     * The start date picker object.
+     */
     @FXML
     private DatePicker startDatePicker;
 
+    /**
+     * The end date picker object.
+     */
     @FXML
     private DatePicker endDatePicker;
 
+    /**
+     * The customer ID text field.
+     */
     @FXML
     private TextField customerIdText;
 
+    /**
+     * The user ID text field.
+     */
     @FXML
     private TextField userIdText;
 
+    /**
+     * The contact combo box.
+     */
     @FXML
     private ComboBox<Contact> contactComboBox;
 
+    /**
+     * The customer combo box.
+     */
     @FXML
     private ComboBox<Customer> customerComboBox;
 
+    /**
+     * The user combo box.
+     */
     @FXML
     private ComboBox<User> userComboBox;
 
+    /**
+     * The start time spinner object.
+     */
     @FXML
     private Spinner<LocalTime> startTimeSpinner;
 
+    /**
+     * The end time spinner object.
+     */
     @FXML
     private Spinner<LocalTime> endTimeSpinner;
 
+    /**
+     * Displays confirmation message and loads AppointmentsController.
+     *
+     * @param event Cancel button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
 
@@ -106,6 +180,11 @@ public class NewAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Sets value for selectedCustomer object and value for customer ID text field.
+     *
+     * @param event Customer combo box action.
+     */
     @FXML
     void customerComboBoxAction(ActionEvent event) {
 
@@ -113,6 +192,14 @@ public class NewAppointmentController implements Initializable {
         customerIdText.setText(String.valueOf(selectedCustomer.getCustomerID()));
     }
 
+    /**
+     * Creates new appointment object and saves to database.
+     *
+     * Input validation is performed with methods from VerifyAppt.
+     *
+     * @param event Save button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void saveButtonAction(ActionEvent event) throws IOException {
 
@@ -161,6 +248,11 @@ public class NewAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Sets value for selectedUser object and value of user ID text field.
+     *
+     * @param event User combo box action.
+     */
     @FXML
     void userComboBoxAction(ActionEvent event) {
 
@@ -182,6 +274,9 @@ public class NewAppointmentController implements Initializable {
         setDefaultValues();
     }
 
+    /**
+     * Sets default values for timer spinners and combo boxes.
+     */
     private void setDefaultValues() {
 
         startSVF.setValue(LocalTime.of(8, 00));
@@ -204,6 +299,11 @@ public class NewAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Creates LocalDateTime object based on values of start date picker and start time spinner.
+     *
+     * @return LocalDateTime object.
+     */
     private LocalDateTime getStartDateTime() {
 
         LocalDate startDate = startDatePicker.getValue();
@@ -213,6 +313,11 @@ public class NewAppointmentController implements Initializable {
         return startDateTime;
     }
 
+    /**
+     * Creates LocalDateTime object based on values of end date picker and end time spinner.
+     *
+     * @return LocalDateTime object.
+     */
     private LocalDateTime getEndDateTime() {
 
         LocalDate endDate = endDatePicker.getValue();
@@ -222,6 +327,10 @@ public class NewAppointmentController implements Initializable {
         return endDateTime;
     }
 
+    /**
+     * Value factory for start time spinner based on fifth-teen minute intervals.
+     *
+     */
     SpinnerValueFactory startSVF = new SpinnerValueFactory<LocalTime>() {
         {
             setConverter(new LocalTimeStringConverter(timeFormat,null));
@@ -238,6 +347,10 @@ public class NewAppointmentController implements Initializable {
         }
     };
 
+    /**
+     * Value factory for end time spinner based on fifth-teen minute intervals.
+     *
+     */
     SpinnerValueFactory endSVF = new SpinnerValueFactory<LocalTime>() {
         {
             setConverter(new LocalTimeStringConverter(timeFormat,null));
