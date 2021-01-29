@@ -28,28 +28,59 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that provides control logic for the Customers screen. Contains
+ * a method with an example of Lambda use.
+ */
 public class CustomersController implements Initializable {
 
+    /**
+     * The customer object selected in the customers table.
+     */
     private static Customer selectedCustomer;
 
+    /**
+     * The Customers table.
+     */
     @FXML
     private TableView<CustomerDisplay> customersTable;
 
+    /**
+     * The Name column for the customers table.
+     */
     @FXML
     private TableColumn<CustomerDisplay, String> nameColumn;
 
+    /**
+     * The Address column for the customers table.
+     */
     @FXML
     private TableColumn<CustomerDisplay, String> addressColumn;
 
+    /**
+     * The Postal Code column for the customers table.
+     */
     @FXML
     private TableColumn<CustomerDisplay, String> postalColumn;
 
+    /**
+     * The Phone Number column for the customers table.
+     */
     @FXML
     private TableColumn<CustomerDisplay, String> phoneColumn;
 
+    /**
+     * The Division Name column for the customers table.
+     */
     @FXML
     private TableColumn<CustomerDisplay, String> divisionColumn;
 
+    /**
+     * Loads the AppointmentsController.
+     *
+     * @param event Back button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void backButtonAction(ActionEvent event) throws IOException {
 
@@ -60,6 +91,15 @@ public class CustomersController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Displays confirmation message and deletes the selected customer.
+     *
+     * Also deletes All appointments associated with selected customer.
+     *
+     * @param event Delete customer button action.
+     * @throws SQLException From AppointmentDAO.selectAll(), AppointmentDAO.deleteByID(),
+     * and CustomerDAO.deleteByID().
+     */
     @FXML
     void deleteCustomerButtonAction(ActionEvent event) throws SQLException {
 
@@ -109,6 +149,12 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * Loads ModifyCustomerController.
+     *
+     * @param event Modify customer button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void modifyCustomerButtonAction(ActionEvent event) throws IOException {
 
@@ -130,6 +176,12 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * Loads NewCustomerController.
+     *
+     * @param event New customer button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void newCustomerButtonAction(ActionEvent event) throws IOException {
 
@@ -141,8 +193,8 @@ public class CustomersController implements Initializable {
     }
 
     /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
+     * Contains example #1 of lambda expression. Called to initialize a controller
+     * after its root element has been completely processed.
      *
      * @param location  The location used to resolve relative paths for the root object, or
      *                  {@code null} if the location is not known.
@@ -165,6 +217,13 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * Sets customer table to display All customers.
+     *
+     * Wrapper class used for customer object display.
+     *
+     * @throws SQLException From CustomerDAO.selectAll().
+     */
     private void displayAllCustomers() throws SQLException {
 
         try {
@@ -184,6 +243,10 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * Passes selected customer object to other controllers.
+     * @return
+     */
     public static Customer getSelectedCustomer() {
         return selectedCustomer;
     }
