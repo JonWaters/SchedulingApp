@@ -25,37 +25,75 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/**
+ * Controller class that provides the control logic for the Location report screen.
+ *
+ * @author Jonthan Waters
+ */
 public class LocationReportController implements Initializable {
 
+    /**
+     * The date time format.
+     */
     private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
 
+    /**
+     * The report table.
+     */
     @FXML
     private TableView<Appointment> reportTable;
 
+    /**
+     * The appointment ID column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, Integer> idColumn;
 
+    /**
+     * The Title column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> titleColumn;
 
+    /**
+     * The Type column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> typeColumn;
 
+    /**
+     * The Location column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> locationColumn;
 
+    /**
+     * The Contact column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> contactColumn;
 
+    /**
+     * The start time column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> startColumn;
 
+    /**
+     * The end time column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> endColumn;
 
+    /**
+     * The customer ID column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, Integer> customerIdColumn;
 
+    /**
+     * The timestamp label.
+     */
     @FXML
     private Label timestampLabel;
 

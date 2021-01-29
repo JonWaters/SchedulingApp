@@ -31,6 +31,8 @@ import java.util.ResourceBundle;
 /**
  * Controller class that provides control logic for the Customers screen. Contains
  * a method with an example of Lambda use.
+ *
+ * @author Jonthan Waters
  */
 public class CustomersController implements Initializable {
 
