@@ -30,48 +30,107 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+/**
+ * Controller class that provides the control logic for the Login screen.
+ *
+ * @author Jonathan Waters
+ */
 public class LoginController implements Initializable {
 
+    /**
+     * The user's locale obtained from system default.
+     */
     Locale userLocale = Locale.getDefault();
 
+    /**
+     * The resource bundle used for language translation.
+     */
     ResourceBundle rb = ResourceBundle.getBundle("Lang/rb", userLocale);
 
+    /**
+     * The user's timezone obtained from class Main.
+     */
     private TimeZone userTimeZone = Main.getUserTimeZone();
 
+    /**
+     * The user object of the currently logged in user.
+     */
     public static User currentUser;
 
+    /**
+     * The date time format.
+     */
     private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
 
+    /**
+     * The user name label for the login screen
+     */
     @FXML
     private Label userNameLabel;
 
+    /**
+     * The password label for the login screen.
+     */
     @FXML
     private Label passwordLabel;
 
+    /**
+     * The timezone label for the login screen.
+     */
     @FXML
     private Label timezoneLabel;
 
+    /**
+     * The timezone ID label for the login screen.
+     */
     @FXML
     private Label zoneIdLabel;
 
+    /**
+     * The cancel button for the login screen.
+     */
     @FXML
     private Button cancelButton;
 
+    /**
+     * The login button for the login screen.
+     */
     @FXML
     private Button loginButton;
 
+    /**
+     * The user name text field for the login screen.
+     */
     @FXML
     private TextField userNameText;
 
+    /**
+     * The password text field for the login screen.
+     */
     @FXML
     private TextField passwordText;
 
+    /**
+     * Closes and terminates the application.
+     *
+     * @param event Cancel button action.
+     */
     @FXML
     void cancelButtonAction(ActionEvent event) {
 
         System.exit(0);
     }
 
+    /**
+     * Calls validUser() and openAppointmentsScreen() if user is valid.
+     *
+     * Calls Userlog.writeLog() to update user log with login attempt details.
+     * Calls appointmentReminder() to display reminder message.
+     *
+     * @param event Login button action.
+     * @throws IOException From openAppointmentsScreen().
+     * @throws SQLException From appointmentReminder().
+     */
     @FXML
     void loginButtonAction(ActionEvent event) throws IOException, SQLException {
 
@@ -102,6 +161,11 @@ public class LoginController implements Initializable {
         setTimeZoneLabel();
     }
 
+    /**
+     * Loads AppointmentsController.
+     * @param event Passed from parent method.
+     * @throws IOException From FXMLLoader.
+     */
     private void openAppointmentsScreen(ActionEvent event) throws IOException {
 
         Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
@@ -111,6 +175,9 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Uses resource bundle to set language of screen elements based on user locale.
+     */
     private void setScreenLang() {
 
         userNameLabel.setText(rb.getString("userNameLabel"));
@@ -120,16 +187,30 @@ public class LoginController implements Initializable {
         loginButton.setText(rb.getString("loginButton"));
     }
 
+    /**
+     * Sets timezone ID label based on system default timezone.
+     *
+     */
     private void setTimeZoneLabel() {
 
         zoneIdLabel.setText(userTimeZone.getID());
     }
 
+    /**
+     * Passes user object of currently logged in user to other controllers.
+     *
+     * @return Current logged in user object.
+     */
     public static User getCurrentUser() {
 
         return currentUser;
     }
 
+    /**
+     * Obtains user name and password details from text fields checks credentials against database.
+     * @return Boolean.
+     * @throws SQLException From UserDAO.selectByName().
+     */
     private Boolean validUser() throws SQLException {
 
         Boolean isValid = false;
@@ -141,7 +222,7 @@ public class LoginController implements Initializable {
             currentUser = UserDAO.selectByName(userName);
 
             if (currentUser.getPassword() == null) {
-                //Do nothing
+                //Do nothing - needed if user name is not in DB.
             } else if (currentUser.getPassword().equals(password)) {
 
                 isValid = true;
@@ -153,6 +234,9 @@ public class LoginController implements Initializable {
         return isValid;
     }
 
+    /**
+     * Displays error message for incorrect user name or password.
+     */
     private void loginError() {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -162,9 +246,13 @@ public class LoginController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Checks appointments starting in the next fifth-teen minutes for current user and displays
+     * appropriate message.
+     *
+     * @throws SQLException From AppointmentDAO.selectAll().
+     */
     private void appointmentReminder() throws SQLException {
-
-
 
         try {
             boolean upcomingAppointment = false;
