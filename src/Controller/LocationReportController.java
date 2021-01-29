@@ -97,6 +97,12 @@ public class LocationReportController implements Initializable {
     @FXML
     private Label timestampLabel;
 
+    /**
+     * Loads ReportsController.
+     *
+     * @param event Close button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void closeButtonAction(ActionEvent event) throws IOException {
 
@@ -132,6 +138,11 @@ public class LocationReportController implements Initializable {
         generateReport();
     }
 
+    /**
+     * Sets reports table to show All appointments ordered by Location.
+     *
+     * Uses wrapper class for display of appointments.
+     */
     private void generateReport() {
 
         try {
