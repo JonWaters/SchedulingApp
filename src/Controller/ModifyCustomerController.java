@@ -29,26 +29,53 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that provides the control logic for the Modify Customer screen.
+ *
+ * @author Jonathan Waters
+ */
 public class ModifyCustomerController implements Initializable {
 
+    /**
+     * List of country objects for the country combo box.
+     */
     private ObservableList<Country> countryList = FXCollections.observableArrayList();
 
+    /**
+     * The currently logged in user obtained from LoginController.
+     */
     private User currentUser = LoginController.getCurrentUser();
 
+    /**
+     * The customer object selected in CustomerController.
+     */
     private Customer selectedCustomer;
 
+    /**
+     * The customer ID text field
+     */
     @FXML
     private TextField customerIdText;
 
+    /**
+     * The customer name text field.
+     */
     @FXML
     private TextField nameText;
 
+    /**
+     * The customer address text field.
+     */
     @FXML
     private TextField addressText;
 
+    /**
+     * The customer postal code text field.
+     */
     @FXML
     private TextField postalText;
 
+    
     @FXML
     private TextField phoneText;
 
