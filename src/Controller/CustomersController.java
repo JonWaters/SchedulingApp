@@ -198,6 +198,8 @@ public class CustomersController implements Initializable {
      * Contains example #1 of lambda expression. Called to initialize a controller
      * after its root element has been completely processed.
      *
+     * Provides example of Lambda use.
+     *
      * @param location  The location used to resolve relative paths for the root object, or
      *                  {@code null} if the location is not known.
      * @param resources The resources used to localize the root object, or {@code null} if
@@ -247,7 +249,8 @@ public class CustomersController implements Initializable {
 
     /**
      * Passes selected customer object to other controllers.
-     * @return
+     *
+     * @return Customer object.
      */
     public static Customer getSelectedCustomer() {
         return selectedCustomer;

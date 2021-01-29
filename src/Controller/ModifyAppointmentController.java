@@ -263,7 +263,8 @@ public class ModifyAppointmentController implements Initializable {
 
     /**
      * Sets value for selectedUser object based on user combo box selection.
-     * @param event
+     *
+     * @param event User combo box action.
      */
     @FXML
     void userComboBoxAction(ActionEvent event) {

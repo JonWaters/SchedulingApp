@@ -64,12 +64,24 @@ public class MonthTypeReportController implements Initializable {
     @FXML
     private TableColumn<MonthTypeReport, String> typeColumn;
 
+    /**
+     * The total column for the report table.
+     */
     @FXML
     private TableColumn<MonthTypeReport, Integer> totalColumn;
 
+    /**
+     * The report timestamp label.
+     */
     @FXML
     private Label timestampLabel;
 
+    /**
+     * Loads ReportsController.
+     *
+     * @param event Close button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void closeButtonAction(ActionEvent event) throws IOException {
 
@@ -101,6 +113,11 @@ public class MonthTypeReportController implements Initializable {
         generateReport();
     }
 
+    /**
+     * Sets reports table to display count of appointments based on count by Year, Month, and Type.
+     *
+     * Provides example of Lambda use.
+     */
     private void generateReport() {
 
         try {
@@ -110,22 +127,19 @@ public class MonthTypeReportController implements Initializable {
             ObservableList<Appointment> dbAppointments = AppointmentDAO.selectAll();
             ObservableList<MonthTypeReport> reportList = FXCollections.observableArrayList();
 
-            //Get unique years
-            //Example of lambda use
+            //Get unique years - example of lambda use
             dbAppointments.forEach(appointment -> {
                 Integer year = appointment.getStartTime().getYear();
                 if (!years.contains(year)) {years.add(year);}
             });
 
-            //Get unique months
-            //Example of lambda use
+            //Get unique months - example of lambda use
             dbAppointments.forEach(appointment -> {
                 Month month = appointment.getStartTime().getMonth();
                 if (!months.contains(month)) {months.add(month);}
             });
 
-            //Get unique types
-            //Example of lambda use
+            //Get unique types - example of lambda use
             dbAppointments.forEach(appointment -> {
                 String type = appointment.getType();
                 if (!types.contains(type)) {types.add(type);}
