@@ -15,23 +15,49 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that provides the control logic for the Reports screen.
+ *
+ * @author Jonathan Waters
+ */
 public class ReportsController implements Initializable {
 
+    /**
+     * The appointment type report radio button.
+     */
     @FXML
     private RadioButton typeRadioButton;
 
+    /**
+     * The radio button toggle group.
+     */
     @FXML
     private ToggleGroup radioButtons;
 
+    /**
+     * The appointments by month report radio button.
+     */
     @FXML
     private RadioButton monthRadioButton;
 
+    /**
+     * The contact schedule report radio button.
+     */
     @FXML
     private RadioButton scheduleRadioButton;
 
+    /**
+     * The appointments by location report radio button.
+     */
     @FXML
     private RadioButton locationRadioButton;
 
+    /**
+     * Loads AppointmentsController.
+     *
+     * @param event Back button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void backButtonAction(ActionEvent event) throws IOException {
 
@@ -42,6 +68,12 @@ public class ReportsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Loads controller based on radio button selected.
+     *
+     * @param event Generate button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void generateButtonAction(ActionEvent event) throws IOException {
 
