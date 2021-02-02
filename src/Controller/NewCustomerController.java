@@ -29,30 +29,65 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that provides the control logic for the New Customer screen.
+ *
+ * @author Jonthan Waters
+ */
 public class NewCustomerController implements Initializable {
 
+    /**
+     * The list of countries for the country combo box.
+     */
     private ObservableList<Country> countryList = FXCollections.observableArrayList();
 
+    /**
+     * A user object for the currently logged in user obtain from LoginController.
+     */
     private User currentUser = LoginController.getCurrentUser();
 
+    /**
+     * The customer name text field.
+     */
     @FXML
     private TextField nameText;
 
+    /**
+     * The customer address text field.
+     */
     @FXML
     private TextField addressText;
 
+    /**
+     * The customer postal code text field.
+     */
     @FXML
     private TextField postalText;
 
+    /**
+     * The customer phone number text field.
+     */
     @FXML
     private TextField phoneText;
 
+    /**
+     * The country combo box.
+     */
     @FXML
     private ComboBox<Country> countryComboBox;
 
+    /**
+     * The division combo box.
+     */
     @FXML
     private ComboBox<Division> divisionComboBox;
 
+    /**
+     * Displays confirmation message and loads CustomersController.
+     *
+     * @param event Cancel button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
 
@@ -71,6 +106,11 @@ public class NewCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Sets value for selectedCountry and filters list for division combo box.
+     *
+     * @param event Country combo box action.
+     */
     @FXML
     void countryComboBoxAction(ActionEvent event) {
 
@@ -93,6 +133,12 @@ public class NewCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Creates new customer object and inserts object into database.
+     *
+     * @param event Save button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void saveButtonAction(ActionEvent event) throws IOException {
 
