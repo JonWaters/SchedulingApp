@@ -25,40 +25,84 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/**
+ * Controller class that provides the control logic for the Contact Schedule Report screen.
+ *
+ * @author Jonathan Waters
+ */
 public class ScheduleReportController implements Initializable {
 
+    /**
+     * The date time format.
+     */
     private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
 
+    /**
+     * The report table.
+     */
     @FXML
     private TableView<Appointment> reportTable;
 
+    /**
+     * The appointment ID column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, Integer> idColumn;
 
+    /**
+     * The title column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> titleColumn;
 
+    /**
+     * The type column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> typeColumn;
 
+    /**
+     * The description column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> descriptionColumn;
 
+    /**
+     * The contact column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> contactColumn;
 
+    /**
+     * The start time column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> startColumn;
 
+    /**
+     * The end time column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, String> endColumn;
 
+    /**
+     * The customer ID column for the report table.
+     */
     @FXML
     private TableColumn<Appointment, Integer> customerIdColumn;
 
+    /**
+     * The report timestamp label.
+     */
     @FXML
     private Label timestampLabel;
 
+    /**
+     * Loads ReportsController.
+     *
+     * @param event Close button action.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void closeButtonAction(ActionEvent event) throws IOException {
 
@@ -94,6 +138,9 @@ public class ScheduleReportController implements Initializable {
         generateReport();
     }
 
+    /**
+     * Sets report table to show list of appointments ordered by contact.
+     */
     private void generateReport() {
 
         try {

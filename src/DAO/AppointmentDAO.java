@@ -8,10 +8,24 @@ import Utils.DbQuery;
 
 import java.sql.*;
 
+/**
+ * Data Access Object (DAO) class that provides the interface for the Appointments database table.
+ *
+ * @author Jonathan Waters
+ */
 public class AppointmentDAO {
 
+    /**
+     * Database connection object obtained from Main.
+     */
     private final static Connection conn = Main.conn;
 
+    /**
+     * Inserts values from appointment object into appointments table.
+     *
+     * @param appointment The appointment object to be inserted.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static void create(Appointment appointment) throws SQLException {
 
         try {
@@ -42,6 +56,13 @@ public class AppointmentDAO {
         }
     }
 
+    /**
+     * Selects all values from appointments table by appointment ID.
+     *
+     * @param dbID The appointment ID to select.
+     * @return An appointment object.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static Appointment selectByID(int dbID) throws SQLException {
 
         Appointment appointment = new Appointment();
@@ -82,6 +103,12 @@ public class AppointmentDAO {
         return appointment;
     }
 
+    /**
+     * Selects all values from appointments table ordered by start time.
+     *
+     * @return A list of appointment objects.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static ObservableList<Appointment> selectAll() throws SQLException {
 
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -125,6 +152,12 @@ public class AppointmentDAO {
         return appointments;
     }
 
+    /**
+     * Selects all values from appointments table ordered by contact.
+     *
+     * @return A list of appointment objects.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static ObservableList<Appointment> selectAllOrderByContact() throws SQLException {
 
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -168,6 +201,12 @@ public class AppointmentDAO {
         return appointments;
     }
 
+    /**
+     * Selects all values from appointments table ordered by location.
+     *
+     * @return A list of appointment objects.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static ObservableList<Appointment> selectAllOrderByLocation() throws SQLException {
 
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -211,6 +250,12 @@ public class AppointmentDAO {
         return appointments;
     }
 
+    /**
+     * Updates appointments table with values from appointment object.
+     *
+     * @param appointment The appointment object.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static void update(Appointment appointment) throws SQLException {
 
         try {
@@ -241,6 +286,12 @@ public class AppointmentDAO {
         }
     }
 
+    /**
+     * Deletes an appointment from the appointments table by appointment ID.
+     *
+     * @param dbID The appointment ID to be deleted.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static void deleteByID(int dbID) throws SQLException {
 
         try{
