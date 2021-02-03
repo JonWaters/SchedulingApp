@@ -11,10 +11,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Data Access Object (DAO) class that provides the interface for the Contacts database table.
+ *
+ * @author Jonathan Waters
+ */
 public class ContactDAO {
 
+    /**
+     * Database connection object obtained from Main.
+     */
     private final static Connection conn = Main.conn;
 
+    /**
+     * Inserts new record into the contacts table using values from a contact object.
+     *
+     * @param contact The contact object to be inserted.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static void create(Contact contact) throws SQLException {
 
         try {
@@ -34,6 +48,13 @@ public class ContactDAO {
         }
     }
 
+    /**
+     * Selects a record from the contacts table by contact ID.
+     *
+     * @param dbID The contact ID.
+     * @return A contact object.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static Contact selectByID(int dbID) throws SQLException {
 
         Contact contact = new Contact();
@@ -64,6 +85,12 @@ public class ContactDAO {
         return contact;
     }
 
+    /**
+     * Selects all records from the contacts table.
+     *
+     * @return A list of contact objects.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static ObservableList<Contact> selectAll() throws SQLException {
 
         ObservableList<Contact> contacts = FXCollections.observableArrayList();
@@ -97,6 +124,12 @@ public class ContactDAO {
         return contacts;
     }
 
+    /**
+     * Updates a record in the contacts table.
+     *
+     * @param contact Contact object to be updated.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static void update(Contact contact) throws SQLException {
 
         try {
@@ -118,6 +151,12 @@ public class ContactDAO {
         }
     }
 
+    /**
+     * Deletes a record from the contacts table by contact ID.
+     *
+     * @param dbID The contact ID to be deleted.
+     * @throws SQLException From DbQuery.setPreparedStatement.
+     */
     public static void deleteByID(int dbID) throws SQLException {
 
         try {
