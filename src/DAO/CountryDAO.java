@@ -8,10 +8,24 @@ import Utils.DbQuery;
 
 import java.sql.*;
 
+/**
+ * Data Access Object (DAO) class that provides the interface for the Country database table.
+ *
+ * @author Jonathan Waters
+ */
 public class CountryDAO {
 
+    /**
+     * Database connection object obtained from Main.
+     */
     private final static Connection conn = Main.conn;
 
+    /**
+     * Inserts a new recorded into the country table.
+     *
+     * @param country Country object to be inserted.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void create(Country country) throws SQLException {
 
         try {
@@ -33,6 +47,13 @@ public class CountryDAO {
         }
     }
 
+    /**
+     * Selects a country record by country ID.
+     *
+     * @param dbID The country ID.
+     * @return A country object.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static Country selectByID(int dbID) throws SQLException {
 
         Country country = new Country();
@@ -66,6 +87,12 @@ public class CountryDAO {
         return country;
     }
 
+    /**
+     * Selects all country records.
+     *
+     * @return A list of country objects.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static ObservableList<Country> selectAll() throws SQLException {
 
         ObservableList<Country> countries = FXCollections.observableArrayList();
@@ -103,6 +130,12 @@ public class CountryDAO {
         return countries;
     }
 
+    /**
+     * Updates a country record.
+     *
+     * @param country Country object to be updated.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void update(Country country) throws SQLException {
 
         try{
@@ -124,6 +157,12 @@ public class CountryDAO {
         }
     }
 
+    /**
+     * Deletes a country record by country ID.
+     *
+     * @param dbID The country ID
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void deleteByID(int dbID) throws SQLException {
 
         try{
