@@ -11,10 +11,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Data Access Object (DAO) class that provides the interface for the User database table.
+ *
+ * @author Jonathan Waters
+ */
 public class UserDAO {
 
+    /**
+     * Database connection object obtained from Main
+     */
     private final static Connection conn = Main.conn;
 
+    /**
+     * Inserts a new user record.
+     *
+     * @param user The user to be inserted.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void create(User user) throws SQLException {
 
         try {
@@ -37,6 +51,13 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Selects a user record by user ID.
+     *
+     * @param dbID The user ID.
+     * @return A user object.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static User selectByID(int dbID) throws SQLException {
 
         User user = new User();
@@ -71,6 +92,13 @@ public class UserDAO {
         return user;
     }
 
+    /**
+     * Selects a user record by user name.
+     *
+     * @param userName The user name string.
+     * @return A user object.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static User selectByName(String userName) throws SQLException {
 
         User user = new User();
@@ -106,6 +134,12 @@ public class UserDAO {
         return user;
     }
 
+    /**
+     * Selects all user records.
+     *
+     * @return A list of user objects.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static ObservableList<User> selectAll() throws SQLException {
 
         ObservableList<User> users = FXCollections.observableArrayList();
@@ -143,6 +177,12 @@ public class UserDAO {
         return users;
     }
 
+    /**
+     * Updates a user record.
+     *
+     * @param user The user object to be updated.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void update(User user) throws SQLException {
 
         try {
@@ -165,6 +205,12 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Deletes a user record by user ID.
+     *
+     * @param dbID The user ID.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void deleteByID(int dbID) throws SQLException {
 
         try {
