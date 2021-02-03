@@ -11,10 +11,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Data Access Object (DAO) class that provides the interface for the first_level_divisions database table.
+ *
+ * @author Jonathan Waters
+ */
 public class DivisionDAO {
 
+    /**
+     * Database connection object obtained from Main.
+     */
     private final static Connection conn = Main.conn;
 
+    /**
+     * Inserts a new division record
+     *
+     * @param division The division object to be inserted.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void create(Division division) throws SQLException {
 
         try {
@@ -38,6 +52,13 @@ public class DivisionDAO {
         }
     }
 
+    /**
+     * Selects a division record by division ID.
+     *
+     * @param dbID The division ID.
+     * @return A division object.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static Division selectByID(int dbID) throws SQLException {
 
         Division division = new Division();
@@ -72,6 +93,12 @@ public class DivisionDAO {
         return division;
     }
 
+    /**
+     * Selects all division records.
+     *
+     * @return A list of division objects.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static ObservableList<Division> selectAll() throws SQLException {
 
         ObservableList<Division> divisions = FXCollections.observableArrayList();
@@ -110,6 +137,12 @@ public class DivisionDAO {
         return divisions;
     }
 
+    /**
+     * Updates a division record.
+     *
+     * @param division The division object to be updated
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void update(Division division) throws SQLException {
 
         try{
@@ -132,6 +165,12 @@ public class DivisionDAO {
         }
     }
 
+    /**
+     * Deletes a division record by division ID.
+     *
+     * @param dbID The division ID.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void deleteByID(int dbID) throws SQLException {
 
         try{
