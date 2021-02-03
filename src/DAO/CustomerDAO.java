@@ -11,10 +11,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Data Access Object (DAO) class that provides the interface for the Customer database table.
+ *
+ * @author Jonathan Waters
+ */
 public class CustomerDAO {
 
+    /**
+     * Database connection object obtained from Main.
+     */
     private final static Connection conn = Main.conn;
 
+    /**
+     * Inserts a new customer record.
+     *
+     * @param customer Customer object to be inserted.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void create(Customer customer) throws SQLException {
 
         try {
@@ -41,6 +55,13 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * Selects a customer record by customer ID.
+     *
+     * @param dbID The customer ID.
+     * @return A customer object.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static Customer selectByID(int dbID) throws SQLException {
 
         Customer customer = new Customer();
@@ -78,6 +99,12 @@ public class CustomerDAO {
         return customer;
     }
 
+    /**
+     * Selects all customer records.
+     *
+     * @return A list of customer objects.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static ObservableList<Customer> selectAll() throws SQLException {
 
         ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -118,6 +145,12 @@ public class CustomerDAO {
         return customers;
     }
 
+    /**
+     * Updates a customer record.
+     *
+     * @param customer The customer object to be updated.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void update(Customer customer) throws  SQLException {
 
         try {
@@ -144,6 +177,12 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * Deletes a customer record by customer ID.
+     *
+     * @param dbID The customer ID.
+     * @throws SQLException From DbQuery.setPreparedStatement().
+     */
     public static void deleteByID(int dbID) throws SQLException {
 
         try {
