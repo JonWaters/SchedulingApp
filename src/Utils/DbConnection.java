@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Utility class that builds a database connection.
+ * Utility class that creates a database connection.
  *
  * @author Jonathan Waters
  */
