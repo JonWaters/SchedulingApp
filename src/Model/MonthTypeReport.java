@@ -4,6 +4,8 @@ import java.time.Month;
 
 /**
  * Models the structure needed for display of the month/type report tableview.
+ *
+ * @author Jonathan Waters
  */
 public class MonthTypeReport {
 
