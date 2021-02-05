@@ -11,14 +11,32 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Utility class that creates a a user log.
+ */
 public class UserLog {
 
+    /**
+     * The user currently logged in.
+     */
     static User currentUser;
 
+    /**
+     * The UTC timezone ID.
+     */
     static ZoneId utcZoneID = ZoneId.of("UTC");
 
-    static DateTimeFormatter globalFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm:ssa z");
+    /**
+     * The date time format.
+     */
+    static DateTimeFormatter globalFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm:ss z");
 
+    /**
+     * Records user login attempts to a log file with timestamp.
+     *
+     * @param entryType int for successful or unsuccessful log entry type.
+     * @throws IOException From FileWriter().
+     */
     public static void writeLog(int entryType) throws IOException {
 
         LocalDateTime currentDateTimeUTC = LocalDateTime.now(utcZoneID);
