@@ -31,7 +31,7 @@ public class UserLog {
     /**
      * The date time format.
      */
-    static DateTimeFormatter globalFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm:ss z");
+    static DateTimeFormatter globalFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm:ssa z");
 
     /**
      * Records user login attempts to a log file with timestamp.
