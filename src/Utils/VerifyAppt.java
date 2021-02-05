@@ -9,10 +9,24 @@ import java.sql.SQLException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Utility class that validates an appointment.
+ *
+ * @author Jonathan Waters
+ */
 public class VerifyAppt {
 
+    /**
+     * The date time format.
+     */
     private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
+    /**
+     * Validates if an appointment has empty text fields.
+     *
+     * @param appointment The appointment to be validated
+     * @return Boolean
+     */
     public static boolean fieldsEmpty(Appointment appointment) {
 
         boolean fieldsEmpty = false;
@@ -39,6 +53,12 @@ public class VerifyAppt {
         return fieldsEmpty;
     }
 
+    /**
+     * Validates if an appointment's start is after it's end.
+     *
+     * @param appointment The appointment to be validated.
+     * @return Boolean
+     */
     public static boolean startAfterEnd(Appointment appointment) {
 
         boolean startAfterEnd = false;
@@ -61,6 +81,12 @@ public class VerifyAppt {
         return startAfterEnd;
     }
 
+    /**
+     * Validates if an appointment is outside business hours.
+     *
+     * @param appointment The appointment to be validated.
+     * @return Boolean
+     */
     public static boolean outsideBusinessHours(Appointment appointment) {
 
         //Build zoned appointment start and rezone as eastern time.
@@ -106,6 +132,13 @@ public class VerifyAppt {
         return outsideBusinessHours;
     }
 
+    /**
+     * Validates if an appointment overlaps with another appointment.
+     *
+     * @param newAppointment The appointment to be validated.
+     * @return Boolean
+     * @throws SQLException From AppointmentDAO.selectAll().
+     */
     public static boolean overlappingAppointment(Appointment newAppointment) throws SQLException {
 
         ObservableList<Appointment> allAppointments = AppointmentDAO.selectAll();

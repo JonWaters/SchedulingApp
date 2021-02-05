@@ -13,6 +13,8 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Utility class that creates a a user log.
+ *
+ * @author Jonathan Waters
  */
 public class UserLog {
 
