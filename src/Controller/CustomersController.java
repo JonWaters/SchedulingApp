@@ -195,10 +195,11 @@ public class CustomersController implements Initializable {
     }
 
     /**
-     * Contains example #1 of lambda expression. Called to initialize a controller
-     * after its root element has been completely processed.
+     * Called to initialize a controller after its root element has been completely processed.
      *
-     * Provides example of Lambda use.
+     * A lambda expression is used here to populate the values for the customers tableview.
+     * It takes advantage of the JavaFX tableview cellData object and is much more concise
+     * than the implementation of a Callback using an abstract class.
      *
      * @param location  The location used to resolve relative paths for the root object, or
      *                  {@code null} if the location is not known.

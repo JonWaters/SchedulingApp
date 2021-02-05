@@ -116,7 +116,9 @@ public class MonthTypeReportController implements Initializable {
     /**
      * Sets reports table to display count of appointments based on count by Year, Month, and Type.
      *
-     * Provides example of Lambda use.
+     * The forEach method with lambda expression is used here to iterate through a Collection.
+     * The use of the forEach method with lambda is more concise and much less error prone than trying
+     * to achieve the same result with a 'for' loop using an Iterator.
      */
     private void generateReport() {
 
