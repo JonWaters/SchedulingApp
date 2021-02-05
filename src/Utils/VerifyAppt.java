@@ -10,7 +10,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Utility class that validates an appointment.
+ * Utility class that validates an Appointment.
  *
  * @author Jonathan Waters
  */
