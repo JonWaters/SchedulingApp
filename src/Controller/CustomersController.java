@@ -86,7 +86,7 @@ public class CustomersController implements Initializable {
     @FXML
     void backButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -170,7 +170,7 @@ public class CustomersController implements Initializable {
             alert.setHeaderText("You must select a customer from the list.");
             alert.showAndWait();
         } else {
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/ModifyCustomer.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/ModifyCustomer.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -187,7 +187,7 @@ public class CustomersController implements Initializable {
     @FXML
     void newCustomerButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/NewCustomer.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/NewCustomer.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

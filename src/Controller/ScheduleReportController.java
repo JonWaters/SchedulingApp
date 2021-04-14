@@ -106,7 +106,7 @@ public class ScheduleReportController implements Initializable {
     @FXML
     void closeButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/Reports.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

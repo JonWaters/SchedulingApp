@@ -153,7 +153,7 @@ public class AppointmentsController implements Initializable {
     @FXML
     void customersButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/Customers.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/Customers.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -258,7 +258,7 @@ public class AppointmentsController implements Initializable {
             alert.setHeaderText("You must select an appointment from the list.");
             alert.showAndWait();
         } else {
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/ModifyAppointment.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/ModifyAppointment.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -290,7 +290,7 @@ public class AppointmentsController implements Initializable {
     @FXML
     void newAppointmentButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/NewAppointment.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/NewAppointment.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -306,7 +306,7 @@ public class AppointmentsController implements Initializable {
     @FXML
     void reportsButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/Reports.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

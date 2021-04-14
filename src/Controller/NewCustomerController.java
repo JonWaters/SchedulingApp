@@ -98,7 +98,7 @@ public class NewCustomerController implements Initializable {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/Customers.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/Customers.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -158,7 +158,7 @@ public class NewCustomerController implements Initializable {
 
                 CustomerDAO.create(newCustomer);
 
-                Parent parent = FXMLLoader.load(getClass().getResource("../View/Customers.fxml"));
+                Parent parent = FXMLLoader.load(getClass().getResource("/View/Customers.fxml"));
                 Scene scene = new Scene(parent);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);

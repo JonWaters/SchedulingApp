@@ -1,6 +1,7 @@
 package DAO;
 
 import Model.Appointment;
+import Utils.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import Main.Main;
@@ -18,7 +19,16 @@ public class AppointmentDAO {
     /**
      * Database connection object obtained from Main.
      */
-    private final static Connection conn = Main.conn;
+    //private final static Connection conn = Main.conn;
+    private static Connection conn = null;
+
+    static {
+        try {
+            conn = DbConnection.startConnection();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Inserts values from appointment object into appointments table.

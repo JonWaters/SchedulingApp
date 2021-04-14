@@ -197,17 +197,20 @@ public class VerifyAppt {
                 break;
             }
         }
-
+/*
         if (overlapping) {
+
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
 
             alert.setTitle("Error");
             alert.setHeaderText("The appointment you are trying to create overlaps with " +
-                    "another appointment starting at " + overlappingAppointment.getStartTime().format(dateTimeFormat) +
-                    " and ending at " + overlappingAppointment.getEndTime().format(dateTimeFormat) + ".");
+                        "another appointment starting at " + overlappingAppointment.getStartTime().format(dateTimeFormat) +
+                        " and ending at " + overlappingAppointment.getEndTime().format(dateTimeFormat) + ".");
             alert.showAndWait();
         }
+
+ */
 
         return overlapping;
     }

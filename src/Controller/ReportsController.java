@@ -61,7 +61,7 @@ public class ReportsController implements Initializable {
     @FXML
     void backButtonAction(ActionEvent event) throws IOException {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -79,21 +79,21 @@ public class ReportsController implements Initializable {
 
         if (monthRadioButton.isSelected()) {
 
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/MonthTypeReport.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/MonthTypeReport.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } else if (scheduleRadioButton.isSelected()) {
 
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/ScheduleReport.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/ScheduleReport.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } else if (locationRadioButton.isSelected()) {
 
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/LocationReport.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/LocationReport.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);

@@ -183,7 +183,7 @@ public class ModifyAppointmentController implements Initializable {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -233,6 +233,15 @@ public class ModifyAppointmentController implements Initializable {
 
             newAppointment.setAppointmentID(selectedAppointment.getAppointmentID());
 
+            if (VerifyAppt.overlappingAppointment(newAppointment)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+
+                alert.setTitle("Error");
+                alert.setHeaderText("The appointment you are trying to create overlaps with " +
+                        "another appointment.");
+                alert.showAndWait();
+            }
+
             if (!VerifyAppt.fieldsEmpty(newAppointment) &&
                     !VerifyAppt.startAfterEnd(newAppointment) &&
                     !VerifyAppt.outsideBusinessHours(newAppointment) &&
@@ -240,7 +249,7 @@ public class ModifyAppointmentController implements Initializable {
 
                 AppointmentDAO.update(newAppointment);
 
-                Parent parent = FXMLLoader.load(getClass().getResource("../View/Appointments.fxml"));
+                Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
                 Scene scene = new Scene(parent);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
