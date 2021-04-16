@@ -15,10 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -77,6 +74,15 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<CustomerDisplay, String> divisionColumn;
 
+    @FXML
+    private Button clearSearchButton;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private TextField searchText;
+
     /**
      * Loads the AppointmentsController.
      *
@@ -91,6 +97,11 @@ public class CustomersController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    void clearSearchButtonAction(ActionEvent event) {
+
     }
 
     /**
@@ -192,6 +203,11 @@ public class CustomersController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    void searchButtonAction(ActionEvent event) {
+
     }
 
     /**

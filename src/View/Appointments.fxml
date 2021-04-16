@@ -5,6 +5,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -41,5 +42,8 @@
          </toggleGroup></RadioButton>
       <RadioButton fx:id="monthRadioButton" layoutX="171.0" layoutY="142.0" mnemonicParsing="false" onAction="#monthRadioButtonAction" text="Month" toggleGroup="$radioButtons" />
       <RadioButton fx:id="allRadioButton" layoutX="48.0" layoutY="142.0" mnemonicParsing="false" onAction="#allRadioButtonAction" text="All" toggleGroup="$radioButtons" />
+      <Button fx:id="clearSearchButton" layoutX="683.0" layoutY="138.0" mnemonicParsing="false" onAction="#clearSearchButtonAction" text="Clear" />
+      <Button fx:id="searchButton" layoutX="615.0" layoutY="138.0" mnemonicParsing="false" onAction="#searchButtonAction" text="Search" />
+      <TextField fx:id="searchText" layoutX="278.0" layoutY="138.0" prefHeight="27.0" prefWidth="322.0" promptText="Search Text" />
    </children>
 </AnchorPane>

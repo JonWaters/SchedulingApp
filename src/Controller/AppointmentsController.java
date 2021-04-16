@@ -122,10 +122,24 @@ public class AppointmentsController implements Initializable {
     @FXML
     private RadioButton allRadioButton;
 
+    @FXML
+    private Button clearSearchButton;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private TextField searchText;
+
     /**
      * The constructor for the AppointmentsController class.
      */
     public AppointmentsController() {
+    }
+
+    @FXML
+    void clearSearchButtonAction(ActionEvent event) {
+
     }
 
     /**
@@ -311,6 +325,11 @@ public class AppointmentsController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    void searchButtonAction(ActionEvent event) {
+
     }
 
     /**
