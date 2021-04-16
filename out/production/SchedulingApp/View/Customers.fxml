@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -27,5 +28,8 @@
       <Button layoutX="752.0" layoutY="217.0" mnemonicParsing="false" onAction="#modifyCustomerButtonAction" prefHeight="27.0" prefWidth="130.0" text="Modify Customer" />
       <Button layoutX="752.0" layoutY="261.0" mnemonicParsing="false" onAction="#deleteCustomerButtonAction" prefHeight="27.0" prefWidth="130.0" text="Delete Customer" />
       <Button layoutX="829.0" layoutY="550.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="27.0" prefWidth="53.0" text="Back" />
+      <Button fx:id="clearSearchButton" layoutX="683.0" layoutY="135.0" mnemonicParsing="false" onAction="#clearSearchButtonAction" text="Clear" />
+      <Button fx:id="searchButton" layoutX="616.0" layoutY="135.0" mnemonicParsing="false" onAction="#searchButtonAction" text="Search" />
+      <TextField fx:id="searchText" layoutX="289.0" layoutY="135.0" prefHeight="27.0" prefWidth="314.0" promptText="Search Text" />
    </children>
 </AnchorPane>

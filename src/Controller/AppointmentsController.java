@@ -1,6 +1,8 @@
 package Controller;
 
 import DAO.AppointmentDAO;
+import DAO.ContactDAO;
+import DAO.CustomerDAO;
 import Model.Appointment;
 import Model.AppointmentDisplay;
 import javafx.collections.FXCollections;
@@ -138,8 +140,17 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void clearSearchButtonAction(ActionEvent event) {
+    void clearSearchButtonAction(ActionEvent event) throws SQLException {
 
+        searchText.setText("");
+
+        if (allRadioButton.isSelected()) {
+            displayAllAppointments();
+        } else if (monthRadioButton.isSelected()) {
+            displayAppointmentsByMonth();
+        } else if (weekRadioButton.isSelected()) {
+            displayAppointmentsByWeek();
+        }
     }
 
     /**
@@ -328,8 +339,15 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void searchButtonAction(ActionEvent event) {
+    void searchButtonAction(ActionEvent event) throws SQLException {
 
+        if (allRadioButton.isSelected()) {
+            displayAllAppointments();
+        } else if (monthRadioButton.isSelected()) {
+            displayAppointmentsByMonth();
+        } else if (weekRadioButton.isSelected()) {
+            displayAppointmentsByWeek();
+        }
     }
 
     /**
@@ -395,7 +413,39 @@ public class AppointmentsController implements Initializable {
                 appointments.add(newAppointment);
             }
 
-            appointmentsTable.setItems(appointments);
+            String searchString = searchText.getText();
+
+            if (!searchString.equals("")) {
+                ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
+                String appTitle;
+                String appDescription;
+                String appLocation;
+                String appContact;
+                String appType;
+
+                for (Appointment appointment : appointments) {
+                    appTitle = appointment.getTitle();
+                    appDescription = appointment.getDescription();
+                    appLocation = appointment.getLocation();
+                    appContact = ContactDAO.selectByID(appointment.getContactID()).getContactName();
+                    appType = appointment.getType();
+
+                    if (appTitle.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appDescription.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appLocation.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appContact.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appType.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    }
+                }
+                appointmentsTable.setItems(filteredAppointments);
+            } else {
+                appointmentsTable.setItems(appointments);
+            }
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -429,7 +479,39 @@ public class AppointmentsController implements Initializable {
                 }
             }
 
-            appointmentsTable.setItems(appointments);
+            String searchString = searchText.getText();
+
+            if (!searchString.equals("")) {
+                ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
+                String appTitle;
+                String appDescription;
+                String appLocation;
+                String appContact;
+                String appType;
+
+                for (Appointment appointment : appointments) {
+                    appTitle = appointment.getTitle();
+                    appDescription = appointment.getDescription();
+                    appLocation = appointment.getLocation();
+                    appContact = ContactDAO.selectByID(appointment.getContactID()).getContactName();
+                    appType = appointment.getType();
+
+                    if (appTitle.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appDescription.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appLocation.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appContact.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appType.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    }
+                }
+                appointmentsTable.setItems(filteredAppointments);
+            } else {
+                appointmentsTable.setItems(appointments);
+            }
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -462,7 +544,39 @@ public class AppointmentsController implements Initializable {
                 }
             }
 
-            appointmentsTable.setItems(appointments);
+            String searchString = searchText.getText();
+
+            if (!searchString.equals("")) {
+                ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
+                String appTitle;
+                String appDescription;
+                String appLocation;
+                String appContact;
+                String appType;
+
+                for (Appointment appointment : appointments) {
+                    appTitle = appointment.getTitle();
+                    appDescription = appointment.getDescription();
+                    appLocation = appointment.getLocation();
+                    appContact = ContactDAO.selectByID(appointment.getContactID()).getContactName();
+                    appType = appointment.getType();
+
+                    if (appTitle.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appDescription.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appLocation.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appContact.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    } else if (appType.contains(searchString)) {
+                        filteredAppointments.add(appointment);
+                    }
+                }
+                appointmentsTable.setItems(filteredAppointments);
+            } else {
+                appointmentsTable.setItems(appointments);
+            }
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
