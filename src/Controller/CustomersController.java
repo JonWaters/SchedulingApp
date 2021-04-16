@@ -100,8 +100,10 @@ public class CustomersController implements Initializable {
     }
 
     @FXML
-    void clearSearchButtonAction(ActionEvent event) {
+    void clearSearchButtonAction(ActionEvent event) throws SQLException {
 
+        searchText.setText("");
+        displayAllCustomers();
     }
 
     /**
@@ -206,8 +208,9 @@ public class CustomersController implements Initializable {
     }
 
     @FXML
-    void searchButtonAction(ActionEvent event) {
+    void searchButtonAction(ActionEvent event) throws SQLException {
 
+        displayAllCustomers();
     }
 
     /**
@@ -257,7 +260,39 @@ public class CustomersController implements Initializable {
                 customers.add(newCustomer);
             }
 
-            customersTable.setItems(customers);
+            String searchString = searchText.getText();
+
+            if (!searchString.equals("")) {
+                ObservableList<CustomerDisplay> filteredCustomers = FXCollections.observableArrayList();
+                String custName;
+                String custAddress;
+                String custPostalCode;
+                String custPhone;
+                String custDivision;
+
+                for (CustomerDisplay customer : customers) {
+                    custName = customer.getCustomerName();
+                    custAddress = customer.getAddress();
+                    custPostalCode = customer.getPostalCode();
+                    custPhone = customer.getPhone();
+                    custDivision = customer.getDivisionName();
+
+                    if (custName.contains(searchString)) {
+                        filteredCustomers.add(customer);
+                    } else if (custAddress.contains(searchString)) {
+                        filteredCustomers.add(customer);
+                    } else if (custPostalCode.contains(searchString)) {
+                        filteredCustomers.add(customer);
+                    } else if (custPhone.contains(searchString)) {
+                        filteredCustomers.add(customer);
+                    } else if (custDivision.contains(searchString)) {
+                        filteredCustomers.add(customer);
+                    }
+                }
+                customersTable.setItems(filteredCustomers);
+            } else {
+                customersTable.setItems(customers);
+            }
         }
         catch(SQLException e) {
             System.out.println(e.getMessage());
