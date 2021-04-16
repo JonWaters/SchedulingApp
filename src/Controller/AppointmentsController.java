@@ -124,12 +124,21 @@ public class AppointmentsController implements Initializable {
     @FXML
     private RadioButton allRadioButton;
 
+    /**
+     * The clear search button.
+     */
     @FXML
     private Button clearSearchButton;
 
+    /**
+     * The search button.
+     */
     @FXML
     private Button searchButton;
 
+    /**
+     * The search text field.
+     */
     @FXML
     private TextField searchText;
 
@@ -139,6 +148,12 @@ public class AppointmentsController implements Initializable {
     public AppointmentsController() {
     }
 
+    /**
+     * Clears the search text box.
+     *
+     * @param event The clear search button action.
+     * @throws SQLException From AppointmentDAO.selectAll().
+     */
     @FXML
     void clearSearchButtonAction(ActionEvent event) throws SQLException {
 
@@ -338,6 +353,12 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Initiates appointment search.
+     *
+     * @param event The search button action.
+     * @throws SQLException From AppointmentDAO.selectAll().
+     */
     @FXML
     void searchButtonAction(ActionEvent event) throws SQLException {
 
