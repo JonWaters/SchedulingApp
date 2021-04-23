@@ -62,7 +62,7 @@ public class DbConnection {
         try {
             Class.forName(MYSQLJDBCDriver);
             conn = DriverManager.getConnection(jdbcURL, username, password);
-            System.out.println("Connection Successful");
+            //System.out.println("Connection Successful");
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());

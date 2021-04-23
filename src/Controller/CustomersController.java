@@ -74,12 +74,21 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<CustomerDisplay, String> divisionColumn;
 
+    /**
+     * The clear search button.
+     */
     @FXML
     private Button clearSearchButton;
 
+    /**
+     * The search button.
+     */
     @FXML
     private Button searchButton;
 
+    /**
+     * The search text field.
+     */
     @FXML
     private TextField searchText;
 
@@ -99,6 +108,12 @@ public class CustomersController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Clears the search text field.
+     *
+     * @param event The clear search button action.
+     * @throws SQLException From CustomersDAO.selectAll().
+     */
     @FXML
     void clearSearchButtonAction(ActionEvent event) throws SQLException {
 
@@ -207,6 +222,12 @@ public class CustomersController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Initiates customer search.
+     *
+     * @param event The search button action.
+     * @throws SQLException From CustomerDAO.selectAll().
+     */
     @FXML
     void searchButtonAction(ActionEvent event) throws SQLException {
 
